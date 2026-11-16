@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avree's Christening and First Birthday</title>
+<meta name="description" content="You're invited to the christening and first birthday of Avree Bermudez.">
+<meta name="theme-color" content="#4A2C85">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ube: #4A2C85;
+    --ube-deep: #35205F;
+    --ube-mist: #EDE6F8;
+    --mango: #F4B63F;
+    --dahon: #2E6B52;
+    --white: #FFFEFA;
+    --ink: #2A1B47;
+    --display: "Young Serif", Georgia, serif;
+    --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--body);
+    color: var(--ink);
+    background: var(--white);
+    line-height: 1.6;
+    font-size: 1.0625rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--mango); outline-offset: 3px; }
+  button { font: inherit; cursor: pointer; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* Banig (woven mat) pattern */
+  .banig {
+    background-color: var(--ube);
+    background-image:
+      linear-gradient(45deg, rgba(244,182,63,.16) 25%, transparent 25%, transparent 75%, rgba(244,182,63,.16) 75%),
+      linear-gradient(45deg, rgba(244,182,63,.16) 25%, transparent 25%, transparent 75%, rgba(244,182,63,.16) 75%),
+      linear-gradient(-45deg, rgba(255,255,255,.07) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.07) 75%);
+    background-size: 56px 56px, 56px 56px, 28px 28px;
+    background-position: 0 0, 28px 28px, 0 0;
+  }
+
+  /* Cover gate */
+  .gate {
+    position: fixed; inset: 0; z-index: 50;
+    display: grid; place-items: center; text-align: center;
+    padding: 1.5rem; color: var(--white);
+    transition: transform .9s cubic-bezier(.7,0,.2,1), visibility 0s .9s;
+  }
+  .gate.open { transform: translateY(-100%); visibility: hidden; }
+  .gate-inner { max-width: 28rem; background: var(--ube-deep); padding: 2.5rem 2rem; border: 2px solid var(--mango); }
+  .gate p { margin-bottom: .5rem; }
+  .gate h1 { font-family: var(--display); font-weight: 400; font-size: clamp(3rem, 14vw, 5rem); line-height: 1; margin: .5rem 0 1.25rem; }
+  .btn {
+    display: inline-block; border: 0; border-radius: 999px;
+    background: var(--mango); color: var(--ube-deep);
+    font-weight: 700; padding: .85rem 1.6rem; text-decoration: none;
+    transition: transform .15s ease, background .15s ease;
+  }
+  .btn:hover { background: #ffc85c; transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+  .btn.ghost { background: transparent; color: var(--ube); border: 2px solid var(--ube); }
+  .btn.ghost:hover { background: var(--ube-mist); }
+
+  /* Hero */
+  .hero { position: relative; overflow: hidden; color: var(--white); min-height: 100svh; display: flex; flex-direction: column; justify-content: space-between; padding: 2.5rem 1.25rem 0; }
+  .hero-text { text-align: center; max-width: 40rem; margin: 0 auto; }
+  .hero h2 { font-family: var(--display); font-weight: 400; font-size: clamp(4.5rem, 22vw, 10rem); line-height: .9; }
+  .hero .surname { font-family: var(--display); font-size: clamp(1.5rem, 6vw, 2.5rem); margin-top: .25rem; color: var(--mango); }
+  .hero .lede { margin-top: 1.25rem; font-size: 1.15rem; }
+  .hero .lede span { display: block; opacity: .85; font-size: 1rem; margin-top: .25rem; }
+  .play-hint { text-align: center; margin: 1.5rem 0 .5rem; font-size: .95rem; min-height: 1.6em; }
+  .sky { position: relative; height: clamp(15rem, 40vh, 22rem); }
+  .balloon {
+    position: absolute; bottom: -1rem; border: 0; padding: 0;
+    width: clamp(3.6rem, 10vw, 5.2rem); aspect-ratio: 5 / 6;
+    border-radius: 50% 50% 50% 50% / 58% 58% 42% 42%;
+    background: var(--c);
+    box-shadow: inset -.6rem -.8rem 0 rgba(0,0,0,.10), inset .5rem .5rem 0 rgba(255,255,255,.28);
+    animation: bob var(--d, 5s) ease-in-out infinite alternate;
+    transform-origin: 50% 100%;
+  }
+  .balloon::after { content: ""; position: absolute; left: 50%; top: 100%; width: 2px; height: 5rem; background: rgba(255,255,255,.55); transform: translateX(-50%); }
+  .balloon::before { content: ""; position: absolute; left: 50%; top: 96%; width: .7rem; height: .6rem; background: var(--c); transform: translateX(-50%) rotate(45deg); filter: brightness(.85); }
+  .balloon:hover { filter: brightness(1.1); }
+  .balloon.popped { animation: pop .25s ease-out forwards; pointer-events: none; }
+  @keyframes bob { from { transform: translateY(0) rotate(-3deg); } to { transform: translateY(-1.2rem) rotate(3deg); } }
+  @keyframes pop { to { transform: scale(1.5); opacity: 0; } }
+  .photo { position: relative; width: clamp(9rem, 38vw, 13rem); aspect-ratio: 4 / 5; margin: 0 auto 1.25rem; border-radius: 999px 999px 1rem 1rem; overflow: hidden; border: 4px solid var(--mango); background: var(--ube-deep); }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-empty { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 1rem; cursor: pointer; font-size: .95rem; }
+  .photo-empty:hover { background: rgba(255,255,255,.08); }
+  .photo:focus-within { outline: 3px solid var(--mango); outline-offset: 3px; }
+  .intro .hero-text > * { animation: rise .8s both; }
+  .intro .hero-text > :nth-child(2) { animation-delay: .1s; }
+  .intro .hero-text > :nth-child(3) { animation-delay: .2s; }
+  .intro .hero-text > :nth-child(4) { animation-delay: .3s; }
+  .intro .hero-text > :nth-child(5) { animation-delay: .4s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+  /* Sections */
+  section.block { padding: clamp(3rem, 9vw, 6rem) 1.25rem; }
+  .wrap { max-width: 56rem; margin: 0 auto; }
+  h3.title { font-family: var(--display); font-weight: 400; color: var(--ube); font-size: clamp(1.9rem, 6vw, 2.8rem); line-height: 1.1; margin-bottom: 1rem; }
+  .note { max-width: 38rem; }
+
+  /* Countdown */
+  .countdown { background: var(--ube-mist); text-align: center; }
+  .count-row { display: flex; justify-content: center; gap: clamp(.75rem, 4vw, 2rem); margin-top: 1.25rem; flex-wrap: wrap; }
+  .count-row div { min-width: 4.5rem; }
+  .count-row strong { display: block; font-family: var(--display); font-weight: 400; font-size: clamp(2.4rem, 10vw, 4rem); color: var(--ube); line-height: 1; font-variant-numeric: tabular-nums; }
+  .count-row span { font-size: .95rem; }
+  .countdown .title { margin-bottom: 0; }
+
+  /* Where and when */
+  .events { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
+  .event { border-left: 6px solid var(--mango); padding-left: 1.25rem; }
+  .event h4 { font-family: var(--display); font-weight: 400; font-size: 1.6rem; color: var(--ube); }
+  .event .when { font-weight: 700; margin: .35rem 0; }
+  .event .actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+  @media (min-width: 720px) { .events { grid-template-columns: 1fr 1fr; gap: 3.5rem; } }
+
+  /* Program (a real sequence, so times are shown) */
+  .program { background: var(--ube); color: var(--white); }
+  .program .title { color: var(--white); }
+  .timeline { list-style: none; padding: 0; border-left: 2px solid var(--mango); margin-left: .5rem; }
+  .timeline li { position: relative; padding: 0 0 1.5rem 1.5rem; display: grid; grid-template-columns: 5.5rem 1fr; gap: .75rem; }
+  .timeline li::before { content: ""; position: absolute; left: -.55rem; top: .45rem; width: .9rem; height: .9rem; border-radius: 50%; background: var(--mango); }
+  .timeline time { font-weight: 700; color: var(--mango); }
+  .timeline li:last-child { padding-bottom: 0; }
+
+  .rules { background: var(--ube-mist); }
+  .gift-detail { margin-top: .75rem; font-weight: 700; }
+
+  /* Ninong and ninang */
+  .godparents { background: var(--ube-mist); }
+  .gp-list { list-style: none; padding: 0; columns: 2 14rem; column-gap: 2rem; margin-top: 1rem; }
+  .gp-list li { padding: .25rem 0; break-inside: avoid; }
+
+  /* RSVP */
+  form { display: grid; gap: 1.1rem; max-width: 32rem; margin-top: 1.25rem; }
+  label, legend { font-weight: 700; display: block; margin-bottom: .3rem; }
+  input[type=text], input[type=number], textarea {
+    width: 100%; font: inherit; color: inherit; background: #fff;
+    border: 2px solid var(--ube); border-radius: .6rem; padding: .7rem .85rem;
+  }
+  fieldset { border: 0; padding: 0; margin: 0; }
+  .choice { display: flex; gap: .6rem; flex-wrap: wrap; }
+  .choice label { font-weight: 500; margin: 0; }
+  .choice input { position: absolute; opacity: 0; }
+  .choice span { display: inline-block; border: 2px solid var(--ube); border-radius: 999px; padding: .55rem 1.1rem; cursor: pointer; transition: background .15s, color .15s; }
+  .choice input:checked + span { background: var(--ube); color: var(--white); }
+  .choice input:focus-visible + span { outline: 3px solid var(--mango); outline-offset: 3px; }
+  .form-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .status { min-height: 1.6em; font-weight: 700; color: var(--dahon); }
+  .error { color: #A3262A; }
+
+  footer { text-align: center; padding: 3rem 1.25rem; color: var(--white); }
+  footer p { max-width: 30rem; margin: 0 auto; }
+  footer .sign { font-family: var(--display); font-size: 1.6rem; color: var(--mango); margin-bottom: .5rem; }
+
+  canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 60; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .balloon { animation: none; }
+    .intro .hero-text > * { animation: none; }
+    .gate { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cover -->
+<div class="gate banig" id="gate">
+  <div class="gate-inner">
+    <p>Imbitasyon</p>
+    <h1>Avree</h1>
+    <p>You're invited to a christening and a first birthday.</p>
+    <button class="btn" id="openBtn" type="button">Open the invitation</button>
+  </div>
+</div>
+
+<main id="top">
+  <header class="hero banig" id="hero">
+    <div class="hero-text">
+      <figure class="photo" id="photoFrame">
+        <img id="photo" alt="Avree Bermudez" hidden>
+        <label class="photo-empty" id="photoEmpty" for="photoInput">
+          <span>Tap to add Avree's photo</span>
+        </label>
+        <input type="file" id="photoInput" accept="image/*" class="sr-only">
+      </figure>
+      <p>Join us for the binyag and first birthday of</p>
+      <h2>Avree</h2>
+      <p class="surname" id="surname">Bermudez</p>
+      <p class="lede" id="heroDate">
+        <span id="heroDateSpan"></span>
+      </p>
+    </div>
+    <div>
+      <p class="play-hint" id="hint" aria-live="polite">Tap the balloons.</p>
+      <div class="sky" id="sky"></div>
+    </div>
+  </header>
+
+  <section class="block countdown" aria-labelledby="cdTitle">
+    <div class="wrap">
+      <h3 class="title" id="cdTitle">Avree's big day is coming</h3>
+      <div class="count-row" id="countRow" role="timer" aria-live="off">
+        <div><strong id="cdD">0</strong><span>days</span></div>
+        <div><strong id="cdH">0</strong><span>hours</span></div>
+        <div><strong id="cdM">0</strong><span>minutes</span></div>
+        <div><strong id="cdS">0</strong><span>seconds</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="details" aria-labelledby="whereTitle">
+    <div class="wrap">
+      <h3 class="title" id="whereTitle">When and where</h3>
+      <p class="note" id="welcome" style="margin-bottom:2rem"></p>
+      <div class="events" id="events"></div>
+    </div>
+  </section>
+
+  <section class="block program" aria-labelledby="progTitle">
+    <div class="wrap">
+      <h3 class="title" id="progTitle">How the day goes</h3>
+      <ol class="timeline" id="timeline"></ol>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="giftTitle">
+    <div class="wrap">
+      <h3 class="title" id="giftTitle">Gifts</h3>
+      <p class="note" id="giftIntro"></p>
+      <div class="events" id="giftOptions" style="margin-top:1.5rem"></div>
+    </div>
+  </section>
+
+  <section class="block rules" aria-labelledby="ruleTitle">
+    <div class="wrap">
+      <h3 class="title" id="ruleTitle">A request for Avree's health</h3>
+      <p class="note" id="ruleNote"></p>
+    </div>
+  </section>
+
+  <section class="block godparents" id="gpSection" aria-labelledby="gpTitle" hidden>
+    <div class="wrap">
+      <h3 class="title" id="gpTitle">Avree's ninongs and ninangs</h3>
+      <p class="note">Thank you for guiding our baby girl.</p>
+      <ul class="gp-list" id="gpList"></ul>
+    </div>
+  </section>
+
+  <section class="block" id="rsvp" aria-labelledby="rsvpTitle">
+    <div class="wrap">
+      <h3 class="title" id="rsvpTitle">Will you come?</h3>
+      <p class="note" id="rsvpNote"></p>
+      <form id="rsvpForm" novalidate>
+        <div>
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" autocomplete="name" required>
+        </div>
+        <fieldset>
+          <legend>Can you make it?</legend>
+          <div class="choice">
+            <label><input type="radio" name="going" value="yes" checked><span>Yes, we'll be there</span></label>
+            <label><input type="radio" name="going" value="no"><span>Sorry, we can't</span></label>
+          </div>
+        </fieldset>
+        <div id="guestsRow">
+          <label for="guests">How many people are coming, including you?</label>
+          <input type="number" id="guests" name="guests" min="1" max="20" value="1" inputmode="numeric">
+        </div>
+        <div>
+          <label for="msg">Message for Avree (optional)</label>
+          <textarea id="msg" name="msg" rows="3"></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn" type="submit" id="sendBtn">Send my reply by text</button>
+          <button class="btn ghost" type="button" id="copyBtn">Copy my reply</button>
+        </div>
+        <p class="status" id="status" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="banig">
+  <p class="sign">Maraming salamat!</p>
+  <p id="hosts"></p>
+</footer>
+
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<script>
+/* ===== Edit everything here. All dates, places, and names come from this block. ===== */
+const CONFIG = {
+  // Placeholder date: Saturday, December 12, 2026, Philippine time (+08:00). Change to your real date.
+  start: "2026-12-12T10:00:00+08:00",
+  // Avree's photo: put the file in this folder (for example avree.jpg) and set the name here. Leave empty to show the "add photo" placeholder.
+  photo: "avree.jpg",
+  hosts: "With love, Jim & Angela Bermudez",
+  welcome: "Avree is turning one, and we, Jim and Angela, are celebrating her binyag and first birthday in one day. Please join us for the blessing and the handaan afterward.",
+  events: [
+    {
+      title: "Binyag (Christening)",
+      time: "10:00 AM",
+      place: "Your church name here",
+      address: "Church address, City, Philippines",
+      mapQuery: "Your church name here"
+    },
+    {
+      title: "Handaan (Celebration)",
+      time: "12:30 PM",
+      place: "Your venue name here",
+      address: "Venue address, City, Philippines",
+      mapQuery: "Your venue name here"
+    }
+  ],
+  program: [
+    { time: "9:30 AM",  text: "Guests arrive at the church" },
+    { time: "10:00 AM", text: "Christening ceremony" },
+    { time: "12:30 PM", text: "Lunch and photos at the venue" },
+    { time: "2:00 PM",  text: "Avree's first birthday program and games" },
+    { time: "3:00 PM",  text: "Cake and thank-you moment" }
+  ],
+  giftIntro: "Your presence is the best gift we could ask for. If you'd like to give something for Avree, here are two ways.",
+  giftOptions: [
+    { title: "Gift", text: "A small toy, book, or keepsake for Avree is always welcome. You can hand it to us at the party.", detail: "" },
+    // Put your real GCash or bank details in "detail". Leave it empty to hide the line.
+    { title: "Monetary", text: "A monetary gift will go toward Avree's savings and future. You may give it in person or send it online.", detail: "GCash: 09XX XXX XXXX (Jim or Angela Bermudez)" }
+  ],
+  ruleNote: "Avree is still very small, and her immune system is still growing. Please do not kiss her. Smiles, waves, and hellos are very welcome. If you have a cough or cold, we kindly ask that you keep a little distance. Thank you for loving her gently.",
+  godparents: [
+    // "Ninong Name", "Ninang Name"
+  ],
+  rsvpNote: "Please reply by December 1, 2026 so we can prepare enough food and seats.",
+  // Your mobile number in international format, digits only. Example: 639171234567. Leave empty to hide "Send by text".
+  rsvpPhone: "",
+  // (Gift details are in giftOptions above.)
+};
+/* ================================================================================== */
+
+const $ = (s) => document.querySelector(s);
+const start = new Date(CONFIG.start);
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const fmtDate = new Intl.DateTimeFormat("en-PH", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: "Asia/Manila" });
+
+/* Fill content */
+$("#heroDateSpan").textContent = fmtDate.format(start);
+$("#welcome").textContent = CONFIG.welcome;
+$("#giftIntro").textContent = CONFIG.giftIntro;
+$("#ruleNote").textContent = CONFIG.ruleNote;
+$("#giftOptions").innerHTML = CONFIG.giftOptions.map(g => `
+  <article class="event">
+    <h4>${esc(g.title)}</h4>
+    <p>${esc(g.text)}</p>
+    ${g.detail ? `<p class="gift-detail">${esc(g.detail)}</p>` : ""}
+  </article>`).join("");
+$("#rsvpNote").textContent = CONFIG.rsvpNote;
+$("#hosts").textContent = CONFIG.hosts;
+if (!CONFIG.rsvpPhone) $("#sendBtn").hidden = true;
+
+$("#events").innerHTML = CONFIG.events.map((e, i) => `
+  <article class="event">
+    <h4>${esc(e.title)}</h4>
+    <p class="when">${esc(fmtDate.format(start))}, ${esc(e.time)}</p>
+    <p><strong>${esc(e.place)}</strong><br>${esc(e.address)}</p>
+    <div class="actions">
+      <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.mapQuery || e.address)}">Open in Google Maps</a>
+      ${i === 0 ? '<button class="btn ghost" type="button" id="calBtn">Add to my calendar</button>' : ""}
+    </div>
+  </article>`).join("");
+
+$("#timeline").innerHTML = CONFIG.program.map(p => `<li><time>${esc(p.time)}</time><span>${esc(p.text)}</span></li>`).join("");
+if (CONFIG.godparents.length) {
+  $("#gpSection").hidden = false;
+  $("#gpList").innerHTML = CONFIG.godparents.map(n => `<li>${esc(n)}</li>`).join("");
+}
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+/* Photo: loads CONFIG.photo if the file exists; otherwise the frame lets you pick a photo to preview. */
+function showPhoto(src) {
+  const img = $("#photo");
+  img.src = src; img.hidden = false; $("#photoEmpty").hidden = true;
+}
+if (CONFIG.photo) {
+  const probe = new Image();
+  probe.onload = () => showPhoto(CONFIG.photo);
+  probe.src = CONFIG.photo;
+}
+$("#photoInput").addEventListener("change", (e) => {
+  const f = e.target.files[0];
+  if (f) showPhoto(URL.createObjectURL(f));
+});
+$("#photo").addEventListener("click", () => $("#photoInput").click());
+
+/* Cover */
+$("#openBtn").addEventListener("click", () => {
+  $("#gate").classList.add("open");
+  $("#hero").classList.add("intro");
+  burst(innerWidth / 2, innerHeight / 2, 60);
+});
+
+/* Countdown */
+function tick() {
+  let diff = Math.max(0, start - Date.now());
+  const d = Math.floor(diff / 864e5); diff -= d * 864e5;
+  const h = Math.floor(diff / 36e5);  diff -= h * 36e5;
+  const m = Math.floor(diff / 6e4);   diff -= m * 6e4;
+  const s = Math.floor(diff / 1e3);
+  $("#cdD").textContent = d; $("#cdH").textContent = h; $("#cdM").textContent = m; $("#cdS").textContent = s;
+  if (start - Date.now() <= 0) { $("#cdTitle").textContent = "Today is Avree's big day!"; $("#countRow").hidden = true; }
+}
+tick(); setInterval(tick, 1000);
+
+/* Balloons */
+const colors = ["#F4B63F", "#8E6AD1", "#F27C8A", "#4FB3A4", "#FFFEFA", "#F4B63F", "#8E6AD1"];
+const hints = ["Nice pop!", "Keep going!", "Wheee!", "Almost there!", "Two more!", "One left!"];
+let popped = 0;
+function makeBalloons() {
+  const sky = $("#sky"); sky.innerHTML = ""; popped = 0;
+  colors.forEach((c, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "balloon";
+    b.setAttribute("aria-label", "Pop balloon " + (i + 1));
+    b.style.setProperty("--c", c);
+    b.style.left = (6 + i * (88 / colors.length)) + "%";
+    b.style.bottom = (i % 2 ? 2 : 3.5) + "rem";
+    b.style.setProperty("--d", (3.6 + (i % 4) * 0.7) + "s");
+    b.addEventListener("click", () => pop(b, c));
+    sky.appendChild(b);
+  });
+}
+function pop(b, color) {
+  const r = b.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top + r.height / 2, 28, [color, "#F4B63F", "#FFFEFA"]);
+  b.classList.add("popped");
+  popped++;
+  const hint = $("#hint");
+  if (popped === colors.length) {
+    hint.innerHTML = 'Salamat! Avree says see you soon. <button class="btn" style="padding:.3rem .9rem;margin-left:.5rem" id="again" type="button">Again</button>';
+    $("#again").addEventListener("click", () => { makeBalloons(); hint.textContent = "Tap the balloons."; });
+    burst(innerWidth / 2, innerHeight * .4, 120);
+  } else {
+    hint.textContent = hints[popped - 1] || "";
+  }
+}
+makeBalloons();
+
+/* Confetti */
+const cv = $("#confetti"), ctx = cv.getContext("2d");
+let parts = [], raf = null;
+function fit() { cv.width = innerWidth * devicePixelRatio; cv.height = innerHeight * devicePixelRatio; }
+addEventListener("resize", fit); fit();
+function burst(x, y, n, palette) {
+  if (reduceMotion) n = Math.min(n, 8);
+  const cols = palette || ["#F4B63F", "#8E6AD1", "#F27C8A", "#4FB3A4", "#FFFEFA"];
+  for (let i = 0; i < n; i++) {
+    const a = Math.random() * Math.PI * 2, v = 3 + Math.random() * 7;
+    parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 3, g: .18, s: 4 + Math.random() * 6, r: Math.random() * 6, vr: (Math.random() - .5) * .4, c: cols[i % cols.length], life: 90 + Math.random() * 40 });
+  }
+  if (!raf) raf = requestAnimationFrame(frame);
+}
+function frame() {
+  ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  parts = parts.filter(p => p.life > 0);
+  for (const p of parts) {
+    p.x += p.vx; p.y += p.vy; p.vy += p.g; p.vx *= .99; p.r += p.vr; p.life--;
+    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
+    ctx.globalAlpha = Math.min(1, p.life / 30);
+    ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * .6);
+    ctx.restore();
+  }
+  raf = parts.length ? requestAnimationFrame(frame) : null;
+  if (!raf) ctx.clearRect(0, 0, innerWidth, innerHeight);
+}
+
+/* Add to calendar (.ics, first event) */
+document.addEventListener("click", (e) => {
+  if (e.target.id !== "calBtn") return;
+  const pad = (n) => String(n).padStart(2, "0");
+  const utc = (d) => d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate()) + "T" + pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + "00Z";
+  const end = new Date(+start + 5 * 36e5);
+  const ev = CONFIG.events[0];
+  const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Avree Invitation//EN", "BEGIN:VEVENT",
+    "UID:avree-" + start.getTime() + "@invitation", "DTSTAMP:" + utc(new Date()),
+    "DTSTART:" + utc(start), "DTEND:" + utc(end),
+    "SUMMARY:Avree's Christening and First Birthday",
+    "LOCATION:" + (ev.place + ", " + ev.address).replace(/[,;]/g, m => "\\" + m),
+    "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+  a.download = "avree-christening.ics";
+  document.body.appendChild(a); a.click(); a.remove();
+  burst(e.clientX, e.clientY, 24);
+});
+
+/* RSVP */
+const form = $("#rsvpForm"), status = $("#status");
+form.addEventListener("change", () => {
+  $("#guestsRow").hidden = form.going.value === "no";
+});
+function buildMessage() {
+  const name = form.name.value.trim();
+  if (!name) { status.className = "status error"; status.textContent = "Please enter your name first."; form.name.focus(); return null; }
+  status.className = "status";
+  const going = form.going.value === "yes";
+  const n = Math.max(1, parseInt(form.guests.value, 10) || 1);
+  let t = going
+    ? `Hi! This is ${name}. We will be at Avree's binyag and first birthday on ${fmtDate.format(start)}. Number of guests: ${n}.`
+    : `Hi! This is ${name}. Sorry, we can't make it to Avree's binyag and first birthday on ${fmtDate.format(start)}, but we are sending our love.`;
+  const m = form.msg.value.trim();
+  if (m) t += ` Message: ${m}`;
+  return t;
+}
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const text = buildMessage(); if (!text) return;
+  if (!CONFIG.rsvpPhone) return copy(text);
+  location.href = `sms:+${CONFIG.rsvpPhone}?&body=${encodeURIComponent(text)}`;
+  status.textContent = "Opening your messages app. Press send to finish your reply.";
+  if (form.going.value === "yes") burst(innerWidth / 2, innerHeight / 2, 70);
+});
+$("#copyBtn").addEventListener("click", () => { const t = buildMessage(); if (t) copy(t); });
+async function copy(text) {
+  try { await navigator.clipboard.writeText(text); status.textContent = "Copied. Paste it into Messenger, Viber, or text to send."; }
+  catch { status.textContent = "Copy didn't work. Please select and copy this: " + text; }
+  if (form.going.value === "yes") burst(innerWidth / 2, innerHeight / 2, 50);
+}
+</script>
+</body>
+</html>
