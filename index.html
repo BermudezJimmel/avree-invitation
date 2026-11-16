@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Avree's Christening and First Birthday</title>
 <meta name="description" content="You're invited to the christening and first birthday of Avree Bermudez.">
-<meta name="theme-color" content="#4A2C85">
+<meta name="theme-color" content="#35205F">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Young+Serif&display=swap" rel="stylesheet">
@@ -18,25 +18,23 @@
     --dahon: #2E6B52;
     --white: #FFFEFA;
     --ink: #2A1B47;
+    --nav-h: 4.5rem;
     --display: "Young Serif", Georgia, serif;
     --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   * { box-sizing: border-box; margin: 0; }
-  html { scroll-behavior: smooth; }
+  html, body { height: 100%; }
   body {
-    font-family: var(--body);
-    color: var(--ink);
-    background: var(--white);
-    line-height: 1.6;
-    font-size: 1.0625rem;
-    -webkit-text-size-adjust: 100%;
+    font-family: var(--body); color: var(--ink); background: var(--ube-deep);
+    line-height: 1.6; font-size: 1.0625rem; -webkit-text-size-adjust: 100%;
+    overflow: hidden; overscroll-behavior: none;
   }
-  a { color: inherit; }
-  :focus-visible { outline: 3px solid var(--mango); outline-offset: 3px; }
   button { font: inherit; cursor: pointer; }
+  [hidden] { display: none !important; }
+  :focus-visible { outline: 3px solid var(--mango); outline-offset: 3px; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-  /* Banig (woven mat) pattern */
+  /* Woven banig pattern */
   .banig {
     background-color: var(--ube);
     background-image:
@@ -47,21 +45,10 @@
     background-position: 0 0, 28px 28px, 0 0;
   }
 
-  /* Cover gate */
-  .gate {
-    position: fixed; inset: 0; z-index: 50;
-    display: grid; place-items: center; text-align: center;
-    padding: 1.5rem; color: var(--white);
-    transition: transform .9s cubic-bezier(.7,0,.2,1), visibility 0s .9s;
-  }
-  .gate.open { transform: translateY(-100%); visibility: hidden; }
-  .gate-inner { max-width: 28rem; background: var(--ube-deep); padding: 2.5rem 2rem; border: 2px solid var(--mango); }
-  .gate p { margin-bottom: .5rem; }
-  .gate h1 { font-family: var(--display); font-weight: 400; font-size: clamp(3rem, 14vw, 5rem); line-height: 1; margin: .5rem 0 1.25rem; }
   .btn {
     display: inline-block; border: 0; border-radius: 999px;
     background: var(--mango); color: var(--ube-deep);
-    font-weight: 700; padding: .85rem 1.6rem; text-decoration: none;
+    font-weight: 700; padding: .8rem 1.5rem; text-decoration: none;
     transition: transform .15s ease, background .15s ease;
   }
   .btn:hover { background: #ffc85c; transform: translateY(-2px); }
@@ -69,83 +56,82 @@
   .btn.ghost { background: transparent; color: var(--ube); border: 2px solid var(--ube); }
   .btn.ghost:hover { background: var(--ube-mist); }
 
-  /* Hero */
-  .hero { position: relative; overflow: hidden; color: var(--white); min-height: 100svh; display: flex; flex-direction: column; justify-content: space-between; padding: 2.5rem 1.25rem 0; }
-  .hero-text { text-align: center; max-width: 40rem; margin: 0 auto; }
-  .hero h2 { font-family: var(--display); font-weight: 400; font-size: clamp(4.5rem, 22vw, 10rem); line-height: .9; }
-  .hero .surname { font-family: var(--display); font-size: clamp(1.5rem, 6vw, 2.5rem); margin-top: .25rem; color: var(--mango); }
-  .hero .lede { margin-top: 1.25rem; font-size: 1.15rem; }
-  .hero .lede span { display: block; opacity: .85; font-size: 1rem; margin-top: .25rem; }
-  .play-hint { text-align: center; margin: 1.5rem 0 .5rem; font-size: .95rem; min-height: 1.6em; }
-  .sky { position: relative; height: clamp(15rem, 40vh, 22rem); }
-  .balloon {
-    position: absolute; bottom: -1rem; border: 0; padding: 0;
-    width: clamp(3.6rem, 10vw, 5.2rem); aspect-ratio: 5 / 6;
-    border-radius: 50% 50% 50% 50% / 58% 58% 42% 42%;
-    background: var(--c);
-    box-shadow: inset -.6rem -.8rem 0 rgba(0,0,0,.10), inset .5rem .5rem 0 rgba(255,255,255,.28);
-    animation: bob var(--d, 5s) ease-in-out infinite alternate;
-    transform-origin: 50% 100%;
+  /* Book */
+  .book { position: fixed; inset: 0 0 var(--nav-h) 0; }
+  .page {
+    position: absolute; inset: 0; display: none;
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: clamp(1.5rem, 5vh, 3rem) 1.25rem;
   }
-  .balloon::after { content: ""; position: absolute; left: 50%; top: 100%; width: 2px; height: 5rem; background: rgba(255,255,255,.55); transform: translateX(-50%); }
-  .balloon::before { content: ""; position: absolute; left: 50%; top: 96%; width: .7rem; height: .6rem; background: var(--c); transform: translateX(-50%) rotate(45deg); filter: brightness(.85); }
-  .balloon:hover { filter: brightness(1.1); }
-  .balloon.popped { animation: pop .25s ease-out forwards; pointer-events: none; }
-  @keyframes bob { from { transform: translateY(0) rotate(-3deg); } to { transform: translateY(-1.2rem) rotate(3deg); } }
-  @keyframes pop { to { transform: scale(1.5); opacity: 0; } }
-  .photo { position: relative; width: clamp(9rem, 38vw, 13rem); aspect-ratio: 4 / 5; margin: 0 auto 1.25rem; border-radius: 999px 999px 1rem 1rem; overflow: hidden; border: 4px solid var(--mango); background: var(--ube-deep); }
+  .page.active { display: block; }
+  .page:focus { outline: none; }
+  .page-inner { min-height: 100%; max-width: 40rem; margin: 0 auto; display: flex; flex-direction: column; justify-content: center; }
+  .page.p-banig { color: var(--white); }
+  .page.p-mist { background: var(--ube-mist); }
+  .page.p-white { background: var(--white); }
+  .page.p-ube { background: var(--ube); color: var(--white); }
+  .page.in .page-inner > * { animation: rise .7s both; }
+  .page.in .page-inner > :nth-child(2) { animation-delay: .08s; }
+  .page.in .page-inner > :nth-child(3) { animation-delay: .16s; }
+  .page.in .page-inner > :nth-child(4) { animation-delay: .24s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+  h2.title { font-family: var(--display); font-weight: 400; color: var(--ube); font-size: clamp(1.9rem, 7vw, 2.8rem); line-height: 1.1; margin-bottom: 1rem; }
+  .p-ube h2.title { color: var(--white); }
+  .note { max-width: 36rem; }
+
+  /* Page 1: welcome */
+  .welcome { text-align: center; }
+  .photo { position: relative; width: clamp(8rem, 34vw, 12rem); aspect-ratio: 4 / 5; margin: 0 auto 1rem; border-radius: 999px 999px 1rem 1rem; overflow: hidden; border: 4px solid var(--mango); background: var(--ube-deep); }
   .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .photo-empty { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 1rem; cursor: pointer; font-size: .95rem; }
-  .photo-empty:hover { background: rgba(255,255,255,.08); }
   .photo:focus-within { outline: 3px solid var(--mango); outline-offset: 3px; }
-  .intro .hero-text > * { animation: rise .8s both; }
-  .intro .hero-text > :nth-child(2) { animation-delay: .1s; }
-  .intro .hero-text > :nth-child(3) { animation-delay: .2s; }
-  .intro .hero-text > :nth-child(4) { animation-delay: .3s; }
-  .intro .hero-text > :nth-child(5) { animation-delay: .4s; }
-  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-
-  /* Sections */
-  section.block { padding: clamp(3rem, 9vw, 6rem) 1.25rem; }
-  .wrap { max-width: 56rem; margin: 0 auto; }
-  h3.title { font-family: var(--display); font-weight: 400; color: var(--ube); font-size: clamp(1.9rem, 6vw, 2.8rem); line-height: 1.1; margin-bottom: 1rem; }
-  .note { max-width: 38rem; }
+  .welcome h1 { font-family: var(--display); font-weight: 400; font-size: clamp(4rem, 20vw, 8rem); line-height: .9; }
+  .welcome .surname { font-family: var(--display); font-size: clamp(1.4rem, 6vw, 2.2rem); color: var(--mango); }
+  .welcome .when-line { margin-top: .9rem; font-size: 1.1rem; }
+  .play-hint { margin: 1rem 0 0; font-size: .95rem; min-height: 1.6em; }
+  .sky { position: relative; height: clamp(8rem, 22vh, 12rem); margin-top: .5rem; }
+  .balloon {
+    position: absolute; bottom: 0; border: 0; padding: 0;
+    width: clamp(2.8rem, 9vw, 4.2rem); aspect-ratio: 5 / 6;
+    border-radius: 50% 50% 50% 50% / 58% 58% 42% 42%; background: var(--c);
+    box-shadow: inset -.5rem -.7rem 0 rgba(0,0,0,.10), inset .4rem .4rem 0 rgba(255,255,255,.28);
+    animation: bob var(--d, 5s) ease-in-out 6 alternate; transform-origin: 50% 100%;
+  }
+  .balloon::after { content: ""; position: absolute; left: 50%; top: 100%; width: 2px; height: 2.5rem; background: rgba(255,255,255,.55); transform: translateX(-50%); }
+  .balloon::before { content: ""; position: absolute; left: 50%; top: 96%; width: .6rem; height: .5rem; background: var(--c); transform: translateX(-50%) rotate(45deg); filter: brightness(.85); }
+  .balloon:hover { filter: brightness(1.1); }
+  .balloon.popped { animation: pop .25s ease-out forwards; pointer-events: none; }
+  @keyframes bob { from { transform: translateY(0) rotate(-3deg); } to { transform: translateY(-.9rem) rotate(3deg); } }
+  @keyframes pop { to { transform: scale(1.5); opacity: 0; } }
 
   /* Countdown */
-  .countdown { background: var(--ube-mist); text-align: center; }
-  .count-row { display: flex; justify-content: center; gap: clamp(.75rem, 4vw, 2rem); margin-top: 1.25rem; flex-wrap: wrap; }
-  .count-row div { min-width: 4.5rem; }
-  .count-row strong { display: block; font-family: var(--display); font-weight: 400; font-size: clamp(2.4rem, 10vw, 4rem); color: var(--ube); line-height: 1; font-variant-numeric: tabular-nums; }
+  .count-row { display: flex; gap: clamp(.75rem, 4vw, 2rem); margin: 1.5rem 0; flex-wrap: wrap; }
+  .count-row div { min-width: 4.2rem; }
+  .count-row strong { display: block; font-family: var(--display); font-weight: 400; font-size: clamp(2.6rem, 11vw, 4rem); color: var(--ube); line-height: 1; font-variant-numeric: tabular-nums; }
   .count-row span { font-size: .95rem; }
-  .countdown .title { margin-bottom: 0; }
 
-  /* Where and when */
-  .events { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
-  .event { border-left: 6px solid var(--mango); padding-left: 1.25rem; }
-  .event h4 { font-family: var(--display); font-weight: 400; font-size: 1.6rem; color: var(--ube); }
-  .event .when { font-weight: 700; margin: .35rem 0; }
-  .event .actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
-  @media (min-width: 720px) { .events { grid-template-columns: 1fr 1fr; gap: 3.5rem; } }
+  /* Events and gifts */
+  .events { display: grid; gap: 1.75rem; }
+  .event { border-left: 6px solid var(--mango); padding-left: 1.1rem; }
+  .event h3 { font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ube); }
+  .event .when { font-weight: 700; margin: .25rem 0; }
+  .event .actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; }
+  .gift-detail { margin-top: .5rem; font-weight: 700; }
 
-  /* Program (a real sequence, so times are shown) */
-  .program { background: var(--ube); color: var(--white); }
-  .program .title { color: var(--white); }
+  /* Program */
   .timeline { list-style: none; padding: 0; border-left: 2px solid var(--mango); margin-left: .5rem; }
-  .timeline li { position: relative; padding: 0 0 1.5rem 1.5rem; display: grid; grid-template-columns: 5.5rem 1fr; gap: .75rem; }
+  .timeline li { position: relative; padding: 0 0 1.25rem 1.5rem; display: grid; grid-template-columns: 5.5rem 1fr; gap: .75rem; }
   .timeline li::before { content: ""; position: absolute; left: -.55rem; top: .45rem; width: .9rem; height: .9rem; border-radius: 50%; background: var(--mango); }
   .timeline time { font-weight: 700; color: var(--mango); }
   .timeline li:last-child { padding-bottom: 0; }
 
-  .rules { background: var(--ube-mist); }
-  .gift-detail { margin-top: .75rem; font-weight: 700; }
-
-  /* Ninong and ninang */
-  .godparents { background: var(--ube-mist); }
-  .gp-list { list-style: none; padding: 0; columns: 2 14rem; column-gap: 2rem; margin-top: 1rem; }
-  .gp-list li { padding: .25rem 0; break-inside: avoid; }
+  .gp-list { list-style: none; padding: 0; columns: 2 12rem; column-gap: 2rem; margin-top: .75rem; }
+  .gp-list li { padding: .2rem 0; break-inside: avoid; }
+  .gp { margin-top: 2rem; }
 
   /* RSVP */
-  form { display: grid; gap: 1.1rem; max-width: 32rem; margin-top: 1.25rem; }
+  form { display: grid; gap: 1rem; margin-top: .75rem; }
   label, legend { font-weight: 700; display: block; margin-bottom: .3rem; }
   input[type=text], input[type=number], textarea {
     width: 100%; font: inherit; color: inherit; background: #fff;
@@ -155,65 +141,93 @@
   .choice { display: flex; gap: .6rem; flex-wrap: wrap; }
   .choice label { font-weight: 500; margin: 0; }
   .choice input { position: absolute; opacity: 0; }
-  .choice span { display: inline-block; border: 2px solid var(--ube); border-radius: 999px; padding: .55rem 1.1rem; cursor: pointer; transition: background .15s, color .15s; }
+  .choice span { display: inline-flex; align-items: center; min-height: 2.75rem; border: 2px solid var(--ube); border-radius: 999px; padding: .4rem 1.1rem; cursor: pointer; transition: background-color .15s, color .15s; }
   .choice input:checked + span { background: var(--ube); color: var(--white); }
   .choice input:focus-visible + span { outline: 3px solid var(--mango); outline-offset: 3px; }
   .form-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
   .status { min-height: 1.6em; font-weight: 700; color: var(--dahon); }
   .error { color: #A3262A; }
+  .thanks { margin-top: 1.75rem; font-family: var(--display); font-size: 1.4rem; color: var(--ube); }
+  .hosts { margin-top: .25rem; }
 
-  footer { text-align: center; padding: 3rem 1.25rem; color: var(--white); }
-  footer p { max-width: 30rem; margin: 0 auto; }
-  footer .sign { font-family: var(--display); font-size: 1.6rem; color: var(--mango); margin-bottom: .5rem; }
+  /* Bottom bar */
+  .nav {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    height: var(--nav-h); padding: 0 .75rem env(safe-area-inset-bottom);
+    background: var(--ube-deep); color: var(--white);
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .5rem;
+    box-sizing: content-box;
+  }
+  .nav .btn { padding: .65rem 1.2rem; min-height: 2.75rem; min-width: 5rem; }
+  .nav .btn[disabled] { opacity: .35; pointer-events: none; }
+  .dots { display: none; justify-content: center; gap: .25rem; }
+  .count { text-align: center; font-weight: 700; font-size: .95rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+  .dot { width: 2.75rem; height: 2.75rem; border: 0; background: transparent; display: grid; place-items: center; padding: 0; cursor: pointer; }
+  .dot::before { content: ""; width: .6rem; height: .6rem; border-radius: 50%; background: rgba(255,255,255,.45); transition: transform .2s, background-color .2s; }
+  .dot[aria-current="true"]::before { background: var(--mango); transform: scale(1.5); }
+  /* Dots need about 20rem; on narrow phones show "3 of 7" instead so every target stays 44px or larger */
+  @media (min-width: 42rem) { .dots { display: flex; } .count { display: none; } }
+
+  /* Curtain: closes between pages and opens at the start */
+  .curtain { position: fixed; inset: 0; z-index: 50; pointer-events: none; display: grid; place-items: center; }
+  .curtain.closed { pointer-events: auto; }
+  .curtain .half {
+    position: absolute; top: 0; bottom: 0; width: 50.5%;
+    transition: transform .6s cubic-bezier(.7,0,.25,1);
+    background-color: var(--ube-deep);
+    background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0 14px, rgba(0,0,0,.14) 14px 28px);
+    box-shadow: none;
+  }
+  .curtain.closed .half { box-shadow: 0 0 30px rgba(0,0,0,.35); }
+  .curtain .l { left: 0; transform: translateX(-101%); }
+  .curtain .r { right: 0; transform: translateX(101%); }
+  .curtain.closed .l, .curtain.closed .r { transform: none; }
+  .gate-card {
+    position: relative; z-index: 1; width: calc(100% - 2.5rem); max-width: 26rem; text-align: center; color: var(--white);
+    background: var(--ube-deep); border: 2px solid var(--mango); padding: 2.25rem 1.75rem;
+    transition: opacity .3s, transform .3s;
+  }
+  .gate-card.gone { opacity: 0; transform: scale(.95); pointer-events: none; visibility: hidden; transition: opacity .3s, transform .3s, visibility 0s .3s; }
+  .gate-card h1 { font-family: var(--display); font-weight: 400; font-size: clamp(3rem, 14vw, 4.5rem); line-height: 1; margin: .4rem 0 1rem; }
+  .gate-card p { margin-bottom: .5rem; }
 
   canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 60; }
 
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
     .balloon { animation: none; }
-    .intro .hero-text > * { animation: none; }
-    .gate { transition: none; }
+    .page.in .page-inner > * { animation: none; }
+    .curtain .half, .gate-card { transition: none; }
   }
 </style>
 </head>
 <body>
 
-<!-- Cover -->
-<div class="gate banig" id="gate">
-  <div class="gate-inner">
-    <p>Imbitasyon</p>
-    <h1>Avree</h1>
-    <p>You're invited to a christening and a first birthday.</p>
-    <button class="btn" id="openBtn" type="button">Open the invitation</button>
-  </div>
-</div>
+<div class="book" id="book">
 
-<main id="top">
-  <header class="hero banig" id="hero">
-    <div class="hero-text">
+  <!-- 1 Welcome -->
+  <section class="page p-banig banig active" data-title="Welcome" aria-label="Welcome">
+    <div class="page-inner welcome">
       <figure class="photo" id="photoFrame">
         <img id="photo" alt="Avree Bermudez" hidden>
-        <label class="photo-empty" id="photoEmpty" for="photoInput">
-          <span>Tap to add Avree's photo</span>
-        </label>
+        <label class="photo-empty" id="photoEmpty" for="photoInput"><span>Tap to add Avree's photo</span></label>
         <input type="file" id="photoInput" accept="image/*" class="sr-only">
       </figure>
       <p>Join us for the binyag and first birthday of</p>
-      <h2>Avree</h2>
-      <p class="surname" id="surname">Bermudez</p>
-      <p class="lede" id="heroDate">
-        <span id="heroDateSpan"></span>
-      </p>
+      <h1>Avree</h1>
+      <p class="surname">Bermudez</p>
+      <p class="when-line" id="heroDate"></p>
+      <div>
+        <p class="play-hint" id="hint" aria-live="polite">Tap the balloons.</p>
+        <div class="sky" id="sky"></div>
+      </div>
     </div>
-    <div>
-      <p class="play-hint" id="hint" aria-live="polite">Tap the balloons.</p>
-      <div class="sky" id="sky"></div>
-    </div>
-  </header>
+  </section>
 
-  <section class="block countdown" aria-labelledby="cdTitle">
-    <div class="wrap">
-      <h3 class="title" id="cdTitle">Avree's big day is coming</h3>
+  <!-- 2 Countdown -->
+  <section class="page p-mist" data-title="Countdown" aria-label="Countdown">
+    <div class="page-inner">
+      <h2 class="title" id="cdTitle">Avree's big day is coming</h2>
+      <p class="note" id="welcome"></p>
       <div class="count-row" id="countRow" role="timer" aria-live="off">
         <div><strong id="cdD">0</strong><span>days</span></div>
         <div><strong id="cdH">0</strong><span>hours</span></div>
@@ -223,47 +237,48 @@
     </div>
   </section>
 
-  <section class="block" id="details" aria-labelledby="whereTitle">
-    <div class="wrap">
-      <h3 class="title" id="whereTitle">When and where</h3>
-      <p class="note" id="welcome" style="margin-bottom:2rem"></p>
+  <!-- 3 When and where -->
+  <section class="page p-white" data-title="When and where" aria-label="When and where">
+    <div class="page-inner">
+      <h2 class="title">When and where</h2>
       <div class="events" id="events"></div>
     </div>
   </section>
 
-  <section class="block program" aria-labelledby="progTitle">
-    <div class="wrap">
-      <h3 class="title" id="progTitle">How the day goes</h3>
+  <!-- 4 Program -->
+  <section class="page p-ube" data-title="How the day goes" aria-label="How the day goes">
+    <div class="page-inner">
+      <h2 class="title">How the day goes</h2>
       <ol class="timeline" id="timeline"></ol>
     </div>
   </section>
 
-  <section class="block" aria-labelledby="giftTitle">
-    <div class="wrap">
-      <h3 class="title" id="giftTitle">Gifts</h3>
-      <p class="note" id="giftIntro"></p>
-      <div class="events" id="giftOptions" style="margin-top:1.5rem"></div>
+  <!-- 5 Gifts -->
+  <section class="page p-white" data-title="Gifts" aria-label="Gifts">
+    <div class="page-inner">
+      <h2 class="title">Gifts</h2>
+      <p class="note" id="giftIntro" style="margin-bottom:1.5rem"></p>
+      <div class="events" id="giftOptions"></div>
     </div>
   </section>
 
-  <section class="block rules" aria-labelledby="ruleTitle">
-    <div class="wrap">
-      <h3 class="title" id="ruleTitle">A request for Avree's health</h3>
+  <!-- 6 Request and godparents -->
+  <section class="page p-mist" data-title="A request" aria-label="A request">
+    <div class="page-inner">
+      <h2 class="title">A request for Avree's health</h2>
       <p class="note" id="ruleNote"></p>
+      <div class="gp" id="gpSection" hidden>
+        <h2 class="title" style="font-size:1.6rem">Avree's ninongs and ninangs</h2>
+        <p>Thank you for guiding our baby girl.</p>
+        <ul class="gp-list" id="gpList"></ul>
+      </div>
     </div>
   </section>
 
-  <section class="block godparents" id="gpSection" aria-labelledby="gpTitle" hidden>
-    <div class="wrap">
-      <h3 class="title" id="gpTitle">Avree's ninongs and ninangs</h3>
-      <p class="note">Thank you for guiding our baby girl.</p>
-      <ul class="gp-list" id="gpList"></ul>
-    </div>
-  </section>
-
-  <section class="block" id="rsvp" aria-labelledby="rsvpTitle">
-    <div class="wrap">
-      <h3 class="title" id="rsvpTitle">Will you come?</h3>
+  <!-- 7 RSVP -->
+  <section class="page p-white" data-title="Reply" aria-label="Reply">
+    <div class="page-inner">
+      <h2 class="title">Will you come?</h2>
       <p class="note" id="rsvpNote"></p>
       <form id="rsvpForm" novalidate>
         <div>
@@ -283,7 +298,7 @@
         </div>
         <div>
           <label for="msg">Message for Avree (optional)</label>
-          <textarea id="msg" name="msg" rows="3"></textarea>
+          <textarea id="msg" name="msg" rows="2"></textarea>
         </div>
         <div class="form-actions">
           <button class="btn" type="submit" id="sendBtn">Send my reply by text</button>
@@ -291,14 +306,31 @@
         </div>
         <p class="status" id="status" role="status"></p>
       </form>
+      <p class="thanks">Maraming salamat!</p>
+      <p class="hosts" id="hosts"></p>
     </div>
   </section>
-</main>
+</div>
 
-<footer class="banig">
-  <p class="sign">Maraming salamat!</p>
-  <p id="hosts"></p>
-</footer>
+<nav class="nav" aria-label="Invitation pages">
+  <button class="btn" id="backBtn" type="button">Back</button>
+  <div class="dots" id="dots"></div>
+  <p class="count" id="count" aria-live="polite"></p>
+  <button class="btn" id="nextBtn" type="button">Next</button>
+</nav>
+
+<!-- Curtain and cover -->
+<div class="curtain closed" id="curtain">
+  <div class="half l"></div>
+  <div class="half r"></div>
+  <div class="gate-card" id="gateCard">
+    <p>Imbitasyon</p>
+    <h1>Avree</h1>
+    <p>You're invited to a christening and a first birthday.</p>
+    <p style="font-size:.95rem;opacity:.85">Turn the pages with Next and Back, or swipe.</p>
+    <button class="btn" id="openBtn" type="button" style="margin-top:.75rem">Open the invitation</button>
+  </div>
+</div>
 
 <canvas id="confetti" aria-hidden="true"></canvas>
 
@@ -307,25 +339,13 @@
 const CONFIG = {
   // Placeholder date: Saturday, December 12, 2026, Philippine time (+08:00). Change to your real date.
   start: "2026-12-12T10:00:00+08:00",
-  // Avree's photo: put the file in this folder (for example avree.jpg) and set the name here. Leave empty to show the "add photo" placeholder.
+  // Avree's photo: put the file in this folder (for example avree.jpg) and set the name here.
   photo: "avree.jpg",
   hosts: "With love, Jim & Angela Bermudez",
   welcome: "Avree is turning one, and we, Jim and Angela, are celebrating her binyag and first birthday in one day. Please join us for the blessing and the handaan afterward.",
   events: [
-    {
-      title: "Binyag (Christening)",
-      time: "10:00 AM",
-      place: "Your church name here",
-      address: "Church address, City, Philippines",
-      mapQuery: "Your church name here"
-    },
-    {
-      title: "Handaan (Celebration)",
-      time: "12:30 PM",
-      place: "Your venue name here",
-      address: "Venue address, City, Philippines",
-      mapQuery: "Your venue name here"
-    }
+    { title: "Binyag (Christening)", time: "10:00 AM", place: "Your church name here", address: "Church address, City, Philippines", mapQuery: "Your church name here" },
+    { title: "Handaan (Celebration)", time: "12:30 PM", place: "Your venue name here", address: "Venue address, City, Philippines", mapQuery: "Your venue name here" }
   ],
   program: [
     { time: "9:30 AM",  text: "Guests arrive at the church" },
@@ -346,8 +366,7 @@ const CONFIG = {
   ],
   rsvpNote: "Please reply by December 1, 2026 so we can prepare enough food and seats.",
   // Your mobile number in international format, digits only. Example: 639171234567. Leave empty to hide "Send by text".
-  rsvpPhone: "",
-  // (Gift details are in giftOptions above.)
+  rsvpPhone: ""
 };
 /* ================================================================================== */
 
@@ -355,25 +374,25 @@ const $ = (s) => document.querySelector(s);
 const start = new Date(CONFIG.start);
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const fmtDate = new Intl.DateTimeFormat("en-PH", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: "Asia/Manila" });
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 
 /* Fill content */
-$("#heroDateSpan").textContent = fmtDate.format(start);
+$("#heroDate").textContent = fmtDate.format(start);
 $("#welcome").textContent = CONFIG.welcome;
 $("#giftIntro").textContent = CONFIG.giftIntro;
 $("#ruleNote").textContent = CONFIG.ruleNote;
-$("#giftOptions").innerHTML = CONFIG.giftOptions.map(g => `
-  <article class="event">
-    <h4>${esc(g.title)}</h4>
-    <p>${esc(g.text)}</p>
-    ${g.detail ? `<p class="gift-detail">${esc(g.detail)}</p>` : ""}
-  </article>`).join("");
 $("#rsvpNote").textContent = CONFIG.rsvpNote;
 $("#hosts").textContent = CONFIG.hosts;
 if (!CONFIG.rsvpPhone) $("#sendBtn").hidden = true;
-
+$("#giftOptions").innerHTML = CONFIG.giftOptions.map(g => `
+  <article class="event">
+    <h3>${esc(g.title)}</h3>
+    <p>${esc(g.text)}</p>
+    ${g.detail ? `<p class="gift-detail">${esc(g.detail)}</p>` : ""}
+  </article>`).join("");
 $("#events").innerHTML = CONFIG.events.map((e, i) => `
   <article class="event">
-    <h4>${esc(e.title)}</h4>
+    <h3>${esc(e.title)}</h3>
     <p class="when">${esc(fmtDate.format(start))}, ${esc(e.time)}</p>
     <p><strong>${esc(e.place)}</strong><br>${esc(e.address)}</p>
     <div class="actions">
@@ -381,36 +400,81 @@ $("#events").innerHTML = CONFIG.events.map((e, i) => `
       ${i === 0 ? '<button class="btn ghost" type="button" id="calBtn">Add to my calendar</button>' : ""}
     </div>
   </article>`).join("");
-
 $("#timeline").innerHTML = CONFIG.program.map(p => `<li><time>${esc(p.time)}</time><span>${esc(p.text)}</span></li>`).join("");
 if (CONFIG.godparents.length) {
   $("#gpSection").hidden = false;
   $("#gpList").innerHTML = CONFIG.godparents.map(n => `<li>${esc(n)}</li>`).join("");
 }
-function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 
-/* Photo: loads CONFIG.photo if the file exists; otherwise the frame lets you pick a photo to preview. */
-function showPhoto(src) {
-  const img = $("#photo");
-  img.src = src; img.hidden = false; $("#photoEmpty").hidden = true;
-}
-if (CONFIG.photo) {
-  const probe = new Image();
-  probe.onload = () => showPhoto(CONFIG.photo);
-  probe.src = CONFIG.photo;
-}
-$("#photoInput").addEventListener("change", (e) => {
-  const f = e.target.files[0];
-  if (f) showPhoto(URL.createObjectURL(f));
-});
+/* Photo */
+function showPhoto(src) { const img = $("#photo"); img.src = src; img.hidden = false; $("#photoEmpty").hidden = true; }
+if (CONFIG.photo) { const probe = new Image(); probe.onload = () => showPhoto(CONFIG.photo); probe.src = CONFIG.photo; }
+$("#photoInput").addEventListener("change", (e) => { const f = e.target.files[0]; if (f) showPhoto(URL.createObjectURL(f)); });
 $("#photo").addEventListener("click", () => $("#photoInput").click());
 
-/* Cover */
+/* Book navigation with curtain */
+const pages = [...document.querySelectorAll(".page")];
+const curtain = $("#curtain");
+const dotsEl = $("#dots");
+let current = 0, busy = true, opened = false;
+const TURN = reduceMotion ? 0 : 600;
+
+pages.forEach((p, i) => {
+  const d = document.createElement("button");
+  d.type = "button"; d.className = "dot";
+  d.setAttribute("aria-label", `Go to page ${i + 1}: ${p.dataset.title}`);
+  d.addEventListener("click", () => go(i));
+  dotsEl.appendChild(d);
+});
+function updateNav() {
+  $("#backBtn").disabled = current === 0;
+  $("#nextBtn").disabled = current === pages.length - 1;
+  [...dotsEl.children].forEach((d, i) => d.setAttribute("aria-current", i === current ? "true" : "false"));
+  $("#count").textContent = `${pages[current].dataset.title} (${current + 1} of ${pages.length})`;
+}
+function show(i) {
+  pages[current].classList.remove("active", "in");
+  current = i;
+  const p = pages[current];
+  p.classList.add("active", "in");
+  p.scrollTop = 0;
+  if (opened) { p.setAttribute("tabindex", "-1"); p.focus({ preventScroll: true }); }
+  updateNav();
+}
+function go(i) {
+  if (busy || !opened || i === current || i < 0 || i >= pages.length) return;
+  busy = true;
+  curtain.classList.add("closed");
+  setTimeout(() => {
+    show(i);
+    curtain.classList.remove("closed");
+    setTimeout(() => { busy = false; }, TURN);
+  }, TURN);
+}
+$("#nextBtn").addEventListener("click", () => go(current + 1));
+$("#backBtn").addEventListener("click", () => go(current - 1));
+addEventListener("keydown", (e) => {
+  if (/INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  if (e.key === "ArrowRight" || e.key === "PageDown") go(current + 1);
+  if (e.key === "ArrowLeft" || e.key === "PageUp") go(current - 1);
+});
+let tx = 0, ty = 0;
+addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+addEventListener("touchend", (e) => {
+  if (e.target.closest("input, textarea, .sky")) return;
+  const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+  if (Math.abs(dx) > 60 && Math.abs(dy) < 70) go(current + (dx < 0 ? 1 : -1));
+}, { passive: true });
+
 $("#openBtn").addEventListener("click", () => {
-  $("#gate").classList.add("open");
-  $("#hero").classList.add("intro");
+  $("#gateCard").classList.add("gone");
+  curtain.classList.remove("closed");
+  pages[0].classList.add("in");
+  opened = true;
+  setTimeout(() => { busy = false; }, TURN);
   burst(innerWidth / 2, innerHeight / 2, 60);
 });
+updateNav();
 
 /* Countdown */
 function tick() {
@@ -435,8 +499,8 @@ function makeBalloons() {
     b.type = "button"; b.className = "balloon";
     b.setAttribute("aria-label", "Pop balloon " + (i + 1));
     b.style.setProperty("--c", c);
-    b.style.left = (6 + i * (88 / colors.length)) + "%";
-    b.style.bottom = (i % 2 ? 2 : 3.5) + "rem";
+    b.style.left = (4 + i * (88 / colors.length)) + "%";
+    b.style.bottom = (i % 2 ? 1.5 : 3) + "rem";
     b.style.setProperty("--d", (3.6 + (i % 4) * 0.7) + "s");
     b.addEventListener("click", () => pop(b, c));
     sky.appendChild(b);
@@ -449,7 +513,7 @@ function pop(b, color) {
   popped++;
   const hint = $("#hint");
   if (popped === colors.length) {
-    hint.innerHTML = 'Salamat! Avree says see you soon. <button class="btn" style="padding:.3rem .9rem;margin-left:.5rem" id="again" type="button">Again</button>';
+    hint.innerHTML = 'Salamat! Avree says see you soon. <button class="btn" style="padding:.6rem 1rem;min-height:2.75rem;margin-left:.4rem" id="again" type="button">Again</button>';
     $("#again").addEventListener("click", () => { makeBalloons(); hint.textContent = "Tap the balloons."; });
     burst(innerWidth / 2, innerHeight * .4, 120);
   } else {
@@ -487,7 +551,7 @@ function frame() {
   if (!raf) ctx.clearRect(0, 0, innerWidth, innerHeight);
 }
 
-/* Add to calendar (.ics, first event) */
+/* Add to calendar */
 document.addEventListener("click", (e) => {
   if (e.target.id !== "calBtn") return;
   const pad = (n) => String(n).padStart(2, "0");
@@ -509,9 +573,7 @@ document.addEventListener("click", (e) => {
 
 /* RSVP */
 const form = $("#rsvpForm"), status = $("#status");
-form.addEventListener("change", () => {
-  $("#guestsRow").hidden = form.going.value === "no";
-});
+form.addEventListener("change", () => { $("#guestsRow").hidden = form.going.value === "no"; });
 function buildMessage() {
   const name = form.name.value.trim();
   if (!name) { status.className = "status error"; status.textContent = "Please enter your name first."; form.name.focus(); return null; }
