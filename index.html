@@ -15,6 +15,7 @@
     --ube-deep: #35205F;
     --ube-mist: #EDE6F8;
     --mango: #F4B63F;
+    --pink: #F27C8A;
     --dahon: #2E6B52;
     --white: #FFFEFA;
     --ink: #2A1B47;
@@ -29,10 +30,12 @@
     line-height: 1.6; font-size: 1.0625rem; -webkit-text-size-adjust: 100%;
     overflow: hidden; overscroll-behavior: none;
   }
-  button { font: inherit; cursor: pointer; }
+  button { font: inherit; color: inherit; cursor: pointer; }
   [hidden] { display: none !important; }
   :focus-visible { outline: 3px solid var(--mango); outline-offset: 3px; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .small { font-size: .95rem; }
+  .lbl { font-weight: 700; display: block; margin-bottom: .3rem; }
 
   /* Woven banig pattern */
   .banig {
@@ -46,15 +49,18 @@
   }
 
   .btn {
-    display: inline-block; border: 0; border-radius: 999px;
-    background: var(--mango); color: var(--ube-deep);
-    font-weight: 700; padding: .8rem 1.5rem; text-decoration: none;
-    transition: transform .15s ease, background .15s ease;
+    display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem;
+    border: 0; border-radius: 999px; background: var(--mango); color: var(--ube-deep);
+    font-weight: 700; line-height: 1.2; text-align: center; padding: .7rem 1.4rem; text-decoration: none;
+    transition: transform .15s ease, background-color .15s ease;
   }
-  .btn:hover { background: #ffc85c; transform: translateY(-2px); }
+  .btn:hover { background-color: #ffc85c; transform: translateY(-2px); }
   .btn:active { transform: translateY(0); }
   .btn.ghost { background: transparent; color: var(--ube); border: 2px solid var(--ube); }
-  .btn.ghost:hover { background: var(--ube-mist); }
+  .btn.ghost:hover { background-color: var(--ube-mist); }
+  .btn.light { background: transparent; color: var(--white); border: 2px solid var(--white); }
+  .btn.light:hover { background-color: rgba(255,255,255,.12); }
+  .link-btn { background: none; border: 0; padding: .5rem 0; min-height: 2.75rem; text-decoration: underline; text-underline-offset: 3px; font-weight: 500; align-self: flex-start; }
 
   /* Book */
   .book { position: fixed; inset: 0 0 var(--nav-h) 0; }
@@ -70,25 +76,25 @@
   .page.p-mist { background: var(--ube-mist); }
   .page.p-white { background: var(--white); }
   .page.p-ube { background: var(--ube); color: var(--white); }
+  .page.p-deep { background: var(--ube-deep); color: var(--white); }
   .page.in .page-inner > * { animation: rise .7s both; }
   .page.in .page-inner > :nth-child(2) { animation-delay: .08s; }
   .page.in .page-inner > :nth-child(3) { animation-delay: .16s; }
   .page.in .page-inner > :nth-child(4) { animation-delay: .24s; }
-  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @keyframes rise { from { opacity: 0; transform: translate(calc(var(--dir, 1) * 28px), 14px); } to { opacity: 1; transform: none; } }
 
   h2.title { font-family: var(--display); font-weight: 400; color: var(--ube); font-size: clamp(1.9rem, 7vw, 2.8rem); line-height: 1.1; margin-bottom: 1rem; }
-  .p-ube h2.title { color: var(--white); }
+  .p-ube h2.title, .p-deep h2.title { color: var(--white); }
   .note { max-width: 36rem; }
 
-  /* Page 1: welcome */
+  /* Welcome */
   .welcome { text-align: center; }
   .photo { position: relative; width: clamp(8rem, 34vw, 12rem); aspect-ratio: 4 / 5; margin: 0 auto 1rem; border-radius: 999px 999px 1rem 1rem; overflow: hidden; border: 4px solid var(--mango); background: var(--ube-deep); }
-  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; transform-origin: 50% 40%; }
   .photo-empty { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 1rem; cursor: pointer; font-size: .95rem; }
   .photo:focus-within { outline: 3px solid var(--mango); outline-offset: 3px; }
   .welcome h1 { font-family: var(--display); font-weight: 400; font-size: clamp(4rem, 20vw, 8rem); line-height: .9; }
   .welcome .surname { font-family: var(--display); font-size: clamp(1.4rem, 6vw, 2.2rem); color: var(--mango); }
-  .welcome .when-line { margin-top: .9rem; font-size: 1.1rem; }
   .play-hint { margin: 1rem 0 0; font-size: .95rem; min-height: 1.6em; }
   .sky { position: relative; height: clamp(8rem, 22vh, 12rem); margin-top: .5rem; }
   .balloon {
@@ -105,10 +111,35 @@
   @keyframes bob { from { transform: translateY(0) rotate(-3deg); } to { transform: translateY(-.9rem) rotate(3deg); } }
   @keyframes pop { to { transform: scale(1.5); opacity: 0; } }
 
-  /* Countdown */
-  .count-row { display: flex; gap: clamp(.75rem, 4vw, 2rem); margin: 1.5rem 0; flex-wrap: wrap; }
+  /* Cinematic motion on the welcome page. Each runs once. */
+  .page.in .photo img { animation: push 18s cubic-bezier(.2,.6,.3,1) both; }
+  @keyframes push { from { transform: scale(1); } to { transform: scale(1.14); } }
+  .photo::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(110deg, transparent 35%, rgba(255,255,255,.38) 50%, transparent 65%);
+    transform: translateX(-130%);
+  }
+  .page.in .photo::after { animation: sweep 1.6s ease-in-out .9s both; }
+  @keyframes sweep { from { transform: translateX(-130%); } to { transform: translateX(130%); } }
+  .page.in .welcome h1 { animation: focus 1.5s cubic-bezier(.2,.7,.2,1) .25s both; }
+  @keyframes focus { from { opacity: 0; filter: blur(10px); transform: scale(1.18); } to { opacity: 1; filter: blur(0); transform: none; } }
+  .welcome .photo { translate: calc(var(--px, 0) * 10px) calc(var(--py, 0) * 8px); transition: translate .3s ease-out; }
+  .welcome h1 { translate: calc(var(--px, 0) * -6px) calc(var(--py, 0) * -4px); transition: translate .3s ease-out; }
+  .welcome .sky { translate: calc(var(--px, 0) * -14px) 0; transition: translate .3s ease-out; }
+
+  /* Save the date: scratch card */
+  .scratch { position: relative; width: 100%; max-width: 24rem; height: 12rem; margin: 1.25rem 0 .5rem; border-radius: 1rem; overflow: hidden; background: var(--white); box-shadow: 0 .5rem 1.5rem rgba(53,32,95,.18); touch-action: none; }
+  .scratch-under { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; padding: 1rem; }
+  .sd-day { font-weight: 700; color: var(--dahon); }
+  .sd-date { font-family: var(--display); font-size: clamp(2.2rem, 10vw, 3rem); line-height: 1.05; color: var(--ube); }
+  .sd-year { font-family: var(--display); font-size: 1.4rem; color: var(--ube); }
+  .sd-time { margin-top: .3rem; font-weight: 500; }
+  #scratchCanvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; transition: opacity .6s ease; }
+  #scratchCanvas.done { opacity: 0; pointer-events: none; }
+  .count-wrap { margin-top: 1rem; }
+  .count-row { display: flex; gap: clamp(.75rem, 4vw, 2rem); flex-wrap: wrap; }
   .count-row div { min-width: 4.2rem; }
-  .count-row strong { display: block; font-family: var(--display); font-weight: 400; font-size: clamp(2.6rem, 11vw, 4rem); color: var(--ube); line-height: 1; font-variant-numeric: tabular-nums; }
+  .count-row strong { display: block; font-family: var(--display); font-weight: 400; font-size: clamp(2.4rem, 10vw, 3.6rem); color: var(--ube); line-height: 1; font-variant-numeric: tabular-nums; }
   .count-row span { font-size: .95rem; }
 
   /* Events and gifts */
@@ -118,14 +149,62 @@
   .event .when { font-weight: 700; margin: .25rem 0; }
   .event .actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; }
   .gift-detail { margin-top: .5rem; font-weight: 700; }
+  .qr { display: block; width: 11rem; height: auto; margin-top: .75rem; border-radius: .5rem; background: #fff; }
 
   /* Program */
   .timeline { list-style: none; padding: 0; border-left: 2px solid var(--mango); margin-left: .5rem; }
   .timeline li { position: relative; padding: 0 0 1.25rem 1.5rem; display: grid; grid-template-columns: 5.5rem 1fr; gap: .75rem; }
   .timeline li::before { content: ""; position: absolute; left: -.55rem; top: .45rem; width: .9rem; height: .9rem; border-radius: 50%; background: var(--mango); }
+  .timeline li.now::before { box-shadow: 0 0 0 .35rem rgba(244,182,63,.35); }
   .timeline time { font-weight: 700; color: var(--mango); }
   .timeline li:last-child { padding-bottom: 0; }
+  .now-tag { display: none; font-style: normal; font-weight: 700; color: var(--mango); font-size: .9rem; }
+  .timeline li.now .now-tag { display: block; }
 
+  /* Make a wish: cake */
+  .cake-page { text-align: center; }
+  .cake-page .note { margin: 0 auto; }
+  .cake { position: relative; width: min(15rem, 70vw); height: 13.6rem; margin: 1rem auto .75rem; }
+  .cake::before { content: ""; position: absolute; left: 50%; bottom: 9rem; width: 9rem; height: 9rem; margin-left: -4.5rem; border-radius: 50%; background: radial-gradient(circle, rgba(255,214,120,.35), transparent 70%); transition: opacity .4s; pointer-events: none; }
+  .cake.out::before { opacity: 0; }
+  .plate { position: absolute; bottom: 0; left: -10%; right: -10%; height: .9rem; border-radius: 999px; background: var(--mango); }
+  .tier { position: absolute; left: 50%; translate: -50% 0; border-radius: .9rem .9rem .4rem .4rem; overflow: hidden; }
+  .tier-b { bottom: .6rem; width: 100%; height: 4.5rem; background: var(--ube-mist); }
+  .tier-t { bottom: 5.1rem; width: 66%; height: 3.6rem; background: var(--white); }
+  .tier::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1.4rem;
+    background:
+      radial-gradient(circle at 50% 0, var(--pink) .6rem, transparent .62rem) 0 .3rem / 1.3rem 1.1rem repeat-x,
+      linear-gradient(var(--pink), var(--pink)) 0 0 / 100% .55rem no-repeat;
+  }
+  .tier-b::after { content: ""; position: absolute; left: .75rem; right: .75rem; top: 2rem; bottom: .75rem; background: radial-gradient(circle, var(--mango) .2rem, transparent .23rem) 0 0 / 1.3rem 1.3rem; }
+  .tier-t span { position: absolute; inset: 1rem 0 0; display: grid; place-items: center; font-family: var(--display); font-size: 1.9rem; line-height: 1; color: var(--ube); }
+  .candle { position: absolute; left: 50%; bottom: 8.6rem; translate: -50% 0; width: 1rem; height: 3rem; padding: 0; border: 0; border-radius: .3rem .3rem .1rem .1rem; background: repeating-linear-gradient(160deg, var(--white) 0 .4rem, var(--pink) .4rem .8rem); }
+  .candle::after { content: ""; position: absolute; inset: -2.4rem -1.4rem -.4rem; }
+  .candle:disabled { cursor: default; }
+  .flame { position: absolute; left: 50%; bottom: calc(100% + .1rem); width: 1.1rem; height: 1.8rem; margin-left: -.55rem; transform-origin: 50% 100%; transform: skewX(calc(var(--wind, 0) * -22deg)) scaleY(calc(1 - var(--wind, 0) * .35)); transition: transform .12s, opacity .25s; pointer-events: none; }
+  .flame i { position: absolute; inset: 0; border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%; background: radial-gradient(ellipse at 50% 72%, #fff 0 18%, #FFE08A 32%, var(--mango) 58%, rgba(242,124,40,.15) 78%, transparent 80%); box-shadow: 0 0 1.4rem .35rem rgba(255,200,90,.5); animation: flicker .16s ease-in-out infinite alternate; }
+  @keyframes flicker { from { transform: scale(1, 1) rotate(-2deg); } to { transform: scale(.92, 1.08) rotate(2deg); } }
+  .cake.out .flame { opacity: 0; transform: scale(.3, 0); }
+  .smoke { position: absolute; left: 50%; bottom: calc(100% + .3rem); width: .6rem; height: .6rem; margin-left: -.3rem; border-radius: 50%; background: rgba(255,255,255,.75); opacity: 0; pointer-events: none; }
+  .cake.out .smoke { animation: smoke 1.6s ease-out forwards; }
+  .cake.out .smoke.s2 { animation-delay: .25s; }
+  @keyframes smoke { from { opacity: .8; transform: none; } to { opacity: 0; transform: translate(.9rem, -3.5rem) scale(4); } }
+  .cake-actions { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+  .wish { text-align: left; margin-top: 1.25rem; }
+  .wish .small { margin-top: .3rem; }
+
+  /* A request: hold to promise */
+  .pledge { position: relative; overflow: hidden; display: block; width: 100%; max-width: 26rem; min-height: 3.5rem; margin-top: 1.5rem; border: 2px solid var(--ube); border-radius: 999px; background: var(--white); color: var(--ube); font-weight: 700; padding: .8rem 1.25rem; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+  .pledge-fill { position: absolute; inset: 0; background: var(--mango); transform: scaleX(0); transform-origin: left; transition: transform .25s ease-out; }
+  .pledge.holding .pledge-fill { transform: scaleX(1); transition: transform 1s linear; }
+  .pledge.done .pledge-fill { transform: scaleX(1); transition: none; }
+  .pledge.done { border-color: var(--mango); color: var(--ube-deep); cursor: default; }
+  .pledge-text { position: relative; }
+  #pledgeHint { margin-top: .5rem; min-height: 1.6em; }
+  .stamp { align-self: flex-start; margin-top: .75rem; font-family: var(--display); font-size: 2rem; line-height: 1.2; color: var(--dahon); border: 3px solid var(--dahon); border-radius: .6rem; padding: .2rem 1rem; rotate: -8deg; }
+  #stamp.show { animation: stamp .45s cubic-bezier(.2,1.4,.4,1) both; }
+  @keyframes stamp { from { opacity: 0; transform: scale(2.2); } to { opacity: 1; transform: none; } }
   .gp-list { list-style: none; padding: 0; columns: 2 12rem; column-gap: 2rem; margin-top: .75rem; }
   .gp-list li { padding: .2rem 0; break-inside: avoid; }
   .gp { margin-top: 2rem; }
@@ -133,8 +212,8 @@
   /* RSVP */
   form { display: grid; gap: 1rem; margin-top: .75rem; }
   label, legend { font-weight: 700; display: block; margin-bottom: .3rem; }
-  input[type=text], input[type=number], textarea {
-    width: 100%; font: inherit; color: inherit; background: #fff;
+  input[type=text], textarea {
+    width: 100%; font: inherit; color: var(--ink); background: #fff;
     border: 2px solid var(--ube); border-radius: .6rem; padding: .7rem .85rem;
   }
   fieldset { border: 0; padding: 0; margin: 0; }
@@ -144,6 +223,12 @@
   .choice span { display: inline-flex; align-items: center; min-height: 2.75rem; border: 2px solid var(--ube); border-radius: 999px; padding: .4rem 1.1rem; cursor: pointer; transition: background-color .15s, color .15s; }
   .choice input:checked + span { background: var(--ube); color: var(--white); }
   .choice input:focus-visible + span { outline: 3px solid var(--mango); outline-offset: 3px; }
+  .stepper { display: inline-flex; align-items: center; gap: .9rem; }
+  .step { width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 2px solid var(--ube); background: var(--white); color: var(--ube); font-size: 1.4rem; font-weight: 700; line-height: 1; display: grid; place-items: center; padding: 0; transition: background-color .15s; }
+  .step:hover { background-color: var(--ube-mist); }
+  .step:disabled { opacity: .35; cursor: default; }
+  #guestsOut { min-width: 2ch; text-align: center; font-family: var(--display); font-size: 1.8rem; color: var(--ube); }
+  .preview { border-left: 4px solid var(--mango); background: var(--ube-mist); padding: .75rem 1rem; border-radius: 0 .6rem .6rem 0; }
   .form-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
   .status { min-height: 1.6em; font-weight: 700; color: var(--dahon); }
   .error { color: #A3262A; }
@@ -158,30 +243,36 @@
     display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .5rem;
     box-sizing: content-box;
   }
-  .nav .btn { padding: .65rem 1.2rem; min-height: 2.75rem; min-width: 5rem; }
+  .nav .btn { padding: .65rem 1.2rem; min-width: 5rem; }
   .nav .btn[disabled] { opacity: .35; pointer-events: none; }
-  .dots { display: none; justify-content: center; gap: .25rem; }
+  .nav .btn.nudge { animation: nudge 1.2s ease-in-out 3; }
+  @keyframes nudge { 0%, 100% { transform: none; box-shadow: 0 0 0 0 rgba(244,182,63,0); } 50% { transform: translateX(4px); box-shadow: 0 0 0 .5rem rgba(244,182,63,.25); } }
+  .dots { display: none; justify-content: center; gap: .1rem; }
   .count { text-align: center; font-weight: 700; font-size: .95rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
-  .dot { width: 2.75rem; height: 2.75rem; border: 0; background: transparent; display: grid; place-items: center; padding: 0; cursor: pointer; }
+  .dot { width: 2.75rem; height: 2.75rem; border: 0; background: transparent; display: grid; place-items: center; padding: 0; }
   .dot::before { content: ""; width: .6rem; height: .6rem; border-radius: 50%; background: rgba(255,255,255,.45); transition: transform .2s, background-color .2s; }
   .dot[aria-current="true"]::before { background: var(--mango); transform: scale(1.5); }
-  /* Dots need about 20rem; on narrow phones show "3 of 7" instead so every target stays 44px or larger */
-  @media (min-width: 42rem) { .dots { display: flex; } .count { display: none; } }
+  @media (min-width: 46rem) { .dots { display: flex; } .count { display: none; } }
 
-  /* Curtain: closes between pages and opens at the start */
+  /* Curtain: guests drag it open at the start, and it closes between pages */
   .curtain { position: fixed; inset: 0; z-index: 50; pointer-events: none; display: grid; place-items: center; }
-  .curtain.closed { pointer-events: auto; }
+  .curtain.closed { --open: 0; pointer-events: auto; }
+  .curtain.intro { touch-action: none; cursor: grab; }
+  .curtain.dragging { cursor: grabbing; }
   .curtain .half {
     position: absolute; top: 0; bottom: 0; width: 50.5%;
     transition: transform .6s cubic-bezier(.7,0,.25,1);
     background-color: var(--ube-deep);
     background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0 14px, rgba(0,0,0,.14) 14px 28px);
-    box-shadow: none;
   }
   .curtain.closed .half { box-shadow: 0 0 30px rgba(0,0,0,.35); }
-  .curtain .l { left: 0; transform: translateX(-101%); }
-  .curtain .r { right: 0; transform: translateX(101%); }
-  .curtain.closed .l, .curtain.closed .r { transform: none; }
+  .curtain .l { left: 0; transform: translateX(calc(var(--open, 1) * -101%)); }
+  .curtain .r { right: 0; transform: translateX(calc(var(--open, 1) * 101%)); }
+  .curtain.dragging .half { transition: none; animation: none; }
+  .curtain.peek .l { animation: peekL 1.6s ease-in-out 1.5s 2; }
+  .curtain.peek .r { animation: peekR 1.6s ease-in-out 1.5s 2; }
+  @keyframes peekL { 0%, 100% { translate: 0 0; } 50% { translate: -7% 0; } }
+  @keyframes peekR { 0%, 100% { translate: 0 0; } 50% { translate: 7% 0; } }
   .gate-card {
     position: relative; z-index: 1; width: calc(100% - 2.5rem); max-width: 26rem; text-align: center; color: var(--white);
     background: var(--ube-deep); border: 2px solid var(--mango); padding: 2.25rem 1.75rem;
@@ -190,12 +281,14 @@
   .gate-card.gone { opacity: 0; transform: scale(.95); pointer-events: none; visibility: hidden; transition: opacity .3s, transform .3s, visibility 0s .3s; }
   .gate-card h1 { font-family: var(--display); font-weight: 400; font-size: clamp(3rem, 14vw, 4.5rem); line-height: 1; margin: .4rem 0 1rem; }
   .gate-card p { margin-bottom: .5rem; }
+  .gate-hint { font-size: .95rem; margin-bottom: 1rem !important; }
 
   canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 60; }
 
   @media (prefers-reduced-motion: reduce) {
-    .balloon { animation: none; }
-    .page.in .page-inner > * { animation: none; }
+    .balloon, .flame i, .nav .btn.nudge, .curtain.peek .half { animation: none !important; }
+    .page.in .page-inner > *, .page.in .photo img, .page.in .photo::after, .page.in .welcome h1, #stamp.show, .cake.out .smoke { animation: none; }
+    .welcome .photo, .welcome h1, .welcome .sky { translate: none; transition: none; }
     .curtain .half, .gate-card { transition: none; }
   }
 </style>
@@ -205,7 +298,7 @@
 <div class="book" id="book">
 
   <!-- 1 Welcome -->
-  <section class="page p-banig banig active" data-title="Welcome" aria-label="Welcome">
+  <section class="page p-banig banig active" id="pgWelcome" data-title="Welcome" aria-label="Welcome">
     <div class="page-inner welcome">
       <figure class="photo" id="photoFrame">
         <img id="photo" alt="Avree Bermudez" hidden>
@@ -215,7 +308,6 @@
       <p>Join us for the binyag and first birthday of</p>
       <h1>Avree</h1>
       <p class="surname">Bermudez</p>
-      <p class="when-line" id="heroDate"></p>
       <div>
         <p class="play-hint" id="hint" aria-live="polite">Tap the balloons.</p>
         <div class="sky" id="sky"></div>
@@ -223,22 +315,36 @@
     </div>
   </section>
 
-  <!-- 2 Countdown -->
-  <section class="page p-mist" data-title="Countdown" aria-label="Countdown">
+  <!-- 2 Save the date -->
+  <section class="page p-mist" id="pgDate" data-title="Save the date" aria-label="Save the date">
     <div class="page-inner">
-      <h2 class="title" id="cdTitle">Avree's big day is coming</h2>
+      <h2 class="title">Save the date</h2>
       <p class="note" id="welcome"></p>
-      <div class="count-row" id="countRow" role="timer" aria-live="off">
-        <div><strong id="cdD">0</strong><span>days</span></div>
-        <div><strong id="cdH">0</strong><span>hours</span></div>
-        <div><strong id="cdM">0</strong><span>minutes</span></div>
-        <div><strong id="cdS">0</strong><span>seconds</span></div>
+      <div class="scratch" id="scratch">
+        <div class="scratch-under">
+          <p class="sd-day" id="sdDay"></p>
+          <p class="sd-date" id="sdDate"></p>
+          <p class="sd-year" id="sdYear"></p>
+          <p class="sd-time" id="sdTime"></p>
+        </div>
+        <canvas id="scratchCanvas" aria-hidden="true"></canvas>
+      </div>
+      <p class="small" id="scratchHint">Scratch the gold card with your finger to see the date.</p>
+      <button class="link-btn" id="revealBtn" type="button">Show the date without scratching</button>
+      <div class="count-wrap" id="countWrap" hidden>
+        <p class="lbl" id="cdLabel">Avree's big day is in</p>
+        <div class="count-row" id="countRow" role="timer" aria-live="off">
+          <div><strong id="cdD">0</strong><span>days</span></div>
+          <div><strong id="cdH">0</strong><span>hours</span></div>
+          <div><strong id="cdM">0</strong><span>minutes</span></div>
+          <div><strong id="cdS">0</strong><span>seconds</span></div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- 3 When and where -->
-  <section class="page p-white" data-title="When and where" aria-label="When and where">
+  <section class="page p-white" id="pgWhere" data-title="When and where" aria-label="When and where">
     <div class="page-inner">
       <h2 class="title">When and where</h2>
       <div class="events" id="events"></div>
@@ -246,15 +352,41 @@
   </section>
 
   <!-- 4 Program -->
-  <section class="page p-ube" data-title="How the day goes" aria-label="How the day goes">
+  <section class="page p-ube" id="pgProgram" data-title="How the day goes" aria-label="How the day goes">
     <div class="page-inner">
       <h2 class="title">How the day goes</h2>
       <ol class="timeline" id="timeline"></ol>
     </div>
   </section>
 
-  <!-- 5 Gifts -->
-  <section class="page p-white" data-title="Gifts" aria-label="Gifts">
+  <!-- 5 Make a wish -->
+  <section class="page p-deep" id="pgCake" data-title="Make a wish" aria-label="Make a wish">
+    <div class="page-inner cake-page">
+      <h2 class="title">Make a wish for Avree</h2>
+      <p class="note" id="cakeMsg" aria-live="polite"></p>
+      <div class="cake" id="cake">
+        <div class="plate"></div>
+        <div class="tier tier-b"></div>
+        <div class="tier tier-t"><span>1</span></div>
+        <button class="candle" id="candle" type="button" aria-label="Blow out the candle">
+          <span class="flame"><i></i></span>
+          <span class="smoke"></span><span class="smoke s2"></span>
+        </button>
+      </div>
+      <div class="cake-actions">
+        <button class="btn light" id="micBtn" type="button">Blow with my microphone</button>
+        <button class="btn" id="relightBtn" type="button" hidden>Light the candle again</button>
+      </div>
+      <div class="wish" id="wishBox" hidden>
+        <label for="wish">Your wish for Avree</label>
+        <textarea id="wish" rows="2" placeholder="For example: May you grow up kind and happy."></textarea>
+        <p class="small">Your wish will be added to your reply on the last page.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 Gifts -->
+  <section class="page p-white" id="pgGifts" data-title="Gifts" aria-label="Gifts">
     <div class="page-inner">
       <h2 class="title">Gifts</h2>
       <p class="note" id="giftIntro" style="margin-bottom:1.5rem"></p>
@@ -262,11 +394,17 @@
     </div>
   </section>
 
-  <!-- 6 Request and godparents -->
-  <section class="page p-mist" data-title="A request" aria-label="A request">
+  <!-- 7 A request -->
+  <section class="page p-mist" id="pgRequest" data-title="A request" aria-label="A request">
     <div class="page-inner">
       <h2 class="title">A request for Avree's health</h2>
       <p class="note" id="ruleNote"></p>
+      <button class="pledge" id="pledge" type="button" aria-pressed="false">
+        <span class="pledge-fill"></span>
+        <span class="pledge-text" id="pledgeText">Press and hold to promise</span>
+      </button>
+      <p class="small" id="pledgeHint" aria-live="polite">Hold the button to promise you won't kiss Avree.</p>
+      <p class="stamp" id="stamp" hidden>Promised!</p>
       <div class="gp" id="gpSection" hidden>
         <h2 class="title" style="font-size:1.6rem">Avree's ninongs and ninangs</h2>
         <p>Thank you for guiding our baby girl.</p>
@@ -275,8 +413,8 @@
     </div>
   </section>
 
-  <!-- 7 RSVP -->
-  <section class="page p-white" data-title="Reply" aria-label="Reply">
+  <!-- 8 Reply -->
+  <section class="page p-white" id="pgReply" data-title="Reply" aria-label="Reply">
     <div class="page-inner">
       <h2 class="title">Will you come?</h2>
       <p class="note" id="rsvpNote"></p>
@@ -293,12 +431,20 @@
           </div>
         </fieldset>
         <div id="guestsRow">
-          <label for="guests">How many people are coming, including you?</label>
-          <input type="number" id="guests" name="guests" min="1" max="20" value="1" inputmode="numeric">
+          <span class="lbl" id="guestsLbl">How many people are coming, including you?</span>
+          <div class="stepper" role="group" aria-labelledby="guestsLbl">
+            <button class="step" id="minus" type="button" aria-label="One less person">&minus;</button>
+            <output id="guestsOut" aria-live="polite">1</output>
+            <button class="step" id="plus" type="button" aria-label="One more person">+</button>
+          </div>
         </div>
         <div>
           <label for="msg">Message for Avree (optional)</label>
           <textarea id="msg" name="msg" rows="2"></textarea>
+        </div>
+        <div class="preview">
+          <p class="lbl">Your reply will say</p>
+          <p id="preview"></p>
         </div>
         <div class="form-actions">
           <button class="btn" type="submit" id="sendBtn">Send my reply by text</button>
@@ -320,15 +466,15 @@
 </nav>
 
 <!-- Curtain and cover -->
-<div class="curtain closed" id="curtain">
+<div class="curtain closed intro peek" id="curtain">
   <div class="half l"></div>
   <div class="half r"></div>
   <div class="gate-card" id="gateCard">
     <p>Imbitasyon</p>
     <h1>Avree</h1>
     <p>You're invited to a christening and a first birthday.</p>
-    <p style="font-size:.95rem;opacity:.85">Turn the pages with Next and Back, or swipe.</p>
-    <button class="btn" id="openBtn" type="button" style="margin-top:.75rem">Open the invitation</button>
+    <p class="gate-hint">Slide the curtain sideways to open it, or tap the button.</p>
+    <button class="btn" id="openBtn" type="button">Open the invitation</button>
   </div>
 </div>
 
@@ -347,6 +493,7 @@ const CONFIG = {
     { title: "Binyag (Christening)", time: "10:00 AM", place: "Your church name here", address: "Church address, City, Philippines", mapQuery: "Your church name here" },
     { title: "Handaan (Celebration)", time: "12:30 PM", place: "Your venue name here", address: "Venue address, City, Philippines", mapQuery: "Your venue name here" }
   ],
+  // Times must look like "9:30 AM" so the page can mark the step that is happening now on the day.
   program: [
     { time: "9:30 AM",  text: "Guests arrive at the church" },
     { time: "10:00 AM", text: "Christening ceremony" },
@@ -357,8 +504,10 @@ const CONFIG = {
   giftIntro: "Your presence is the best gift we could ask for. If you'd like to give something for Avree, here are two ways.",
   giftOptions: [
     { title: "Gift", text: "A small toy, book, or keepsake for Avree is always welcome. You can hand it to us at the party.", detail: "" },
-    // Put your real GCash or bank details in "detail". Leave it empty to hide the line.
-    { title: "Monetary", text: "A monetary gift will go toward Avree's savings and future. You may give it in person or send it online.", detail: "GCash: 09XX XXX XXXX (Jim or Angela Bermudez)" }
+    // detail: the line guests see. copy: what the Copy button copies (leave empty to hide the button).
+    // qr: a QR code image in this folder, for example gcash-qr.png (it only shows if the file exists).
+    { title: "Monetary", text: "A monetary gift will go toward Avree's savings and future. You may give it in person or send it online.",
+      detail: "GCash: 09XX XXX XXXX (Jim or Angela Bermudez)", copy: "09XXXXXXXXX", copyLabel: "GCash number", qr: "gcash-qr.png" }
   ],
   ruleNote: "Avree is still very small, and her immune system is still growing. Please do not kiss her. Smiles, waves, and hellos are very welcome. If you have a cough or cold, we kindly ask that you keep a little distance. Thank you for loving her gently.",
   godparents: [
@@ -372,51 +521,84 @@ const CONFIG = {
 
 const $ = (s) => document.querySelector(s);
 const start = new Date(CONFIG.start);
+const TZ = "Asia/Manila";
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const fmtDate = new Intl.DateTimeFormat("en-PH", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: "Asia/Manila" });
+const fmtDate = new Intl.DateTimeFormat("en-PH", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: TZ });
+const part = (opts) => new Intl.DateTimeFormat("en-PH", { ...opts, timeZone: TZ }).format(start);
+const buzz = (p) => { if (navigator.vibrate) navigator.vibrate(p); };
 function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+const pad = (n) => String(n).padStart(2, "0");
+const utc = (d) => d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate()) + "T" + pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + "00Z";
+const EVENT_TITLE = "Avree's Christening and First Birthday";
+const endTime = new Date(+start + 5 * 36e5);
 
-/* Fill content */
-$("#heroDate").textContent = fmtDate.format(start);
+/* ---------- Fill content ---------- */
 $("#welcome").textContent = CONFIG.welcome;
+$("#sdDay").textContent = part({ weekday: "long" });
+$("#sdDate").textContent = part({ month: "long", day: "numeric" });
+$("#sdYear").textContent = part({ year: "numeric" });
+$("#sdTime").textContent = `The binyag starts at ${CONFIG.events[0].time}`;
 $("#giftIntro").textContent = CONFIG.giftIntro;
 $("#ruleNote").textContent = CONFIG.ruleNote;
 $("#rsvpNote").textContent = CONFIG.rsvpNote;
 $("#hosts").textContent = CONFIG.hosts;
 if (!CONFIG.rsvpPhone) $("#sendBtn").hidden = true;
-$("#giftOptions").innerHTML = CONFIG.giftOptions.map(g => `
-  <article class="event">
-    <h3>${esc(g.title)}</h3>
-    <p>${esc(g.text)}</p>
-    ${g.detail ? `<p class="gift-detail">${esc(g.detail)}</p>` : ""}
-  </article>`).join("");
-$("#events").innerHTML = CONFIG.events.map((e, i) => `
+
+const gcalUrl = (ev) => "https://calendar.google.com/calendar/render?action=TEMPLATE"
+  + "&text=" + encodeURIComponent(EVENT_TITLE)
+  + "&dates=" + utc(start) + "/" + utc(endTime)
+  + "&location=" + encodeURIComponent(ev.place + ", " + ev.address)
+  + "&details=" + encodeURIComponent(CONFIG.hosts);
+
+$("#events").innerHTML = CONFIG.events.map((e, i) => {
+  const q = encodeURIComponent(e.mapQuery || e.address);
+  return `
   <article class="event">
     <h3>${esc(e.title)}</h3>
     <p class="when">${esc(fmtDate.format(start))}, ${esc(e.time)}</p>
     <p><strong>${esc(e.place)}</strong><br>${esc(e.address)}</p>
     <div class="actions">
-      <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.mapQuery || e.address)}">Open in Google Maps</a>
-      ${i === 0 ? '<button class="btn ghost" type="button" id="calBtn">Add to my calendar</button>' : ""}
+      <a class="btn" target="_blank" rel="noopener" href="${esc("https://www.google.com/maps/search/?api=1&query=" + q)}">Open in Google Maps</a>
+      <a class="btn ghost" target="_blank" rel="noopener" href="${esc("https://waze.com/ul?q=" + q + "&navigate=yes")}">Open in Waze</a>
     </div>
+    ${i === 0 ? `<div class="actions">
+      <a class="btn ghost" target="_blank" rel="noopener" href="${esc(gcalUrl(e))}">Add to Google Calendar</a>
+      <button class="btn ghost" type="button" id="calBtn">Add to Apple or Outlook</button>
+    </div>` : ""}
+  </article>`;
+}).join("");
+
+$("#timeline").innerHTML = CONFIG.program.map(p => `<li><time>${esc(p.time)}</time><span>${esc(p.text)}<em class="now-tag">Happening now</em></span></li>`).join("");
+
+$("#giftOptions").innerHTML = CONFIG.giftOptions.map(g => `
+  <article class="event">
+    <h3>${esc(g.title)}</h3>
+    <p>${esc(g.text)}</p>
+    ${g.detail ? `<p class="gift-detail">${esc(g.detail)}</p>` : ""}
+    ${g.copy ? `<div class="actions"><button class="btn ghost" type="button" data-copy="${esc(g.copy)}">Copy ${esc(g.copyLabel || "number")}</button></div>` : ""}
+    ${g.qr ? `<img class="qr" data-src="${esc(g.qr)}" alt="${esc(g.title)} QR code" hidden>` : ""}
   </article>`).join("");
-$("#timeline").innerHTML = CONFIG.program.map(p => `<li><time>${esc(p.time)}</time><span>${esc(p.text)}</span></li>`).join("");
+document.querySelectorAll("img.qr").forEach(img => {
+  const probe = new Image();
+  probe.onload = () => { img.src = img.dataset.src; img.hidden = false; };
+  probe.src = img.dataset.src;
+});
+
 if (CONFIG.godparents.length) {
   $("#gpSection").hidden = false;
   $("#gpList").innerHTML = CONFIG.godparents.map(n => `<li>${esc(n)}</li>`).join("");
 }
 
-/* Photo */
+/* ---------- Photo ---------- */
 function showPhoto(src) { const img = $("#photo"); img.src = src; img.hidden = false; $("#photoEmpty").hidden = true; }
 if (CONFIG.photo) { const probe = new Image(); probe.onload = () => showPhoto(CONFIG.photo); probe.src = CONFIG.photo; }
 $("#photoInput").addEventListener("change", (e) => { const f = e.target.files[0]; if (f) showPhoto(URL.createObjectURL(f)); });
 $("#photo").addEventListener("click", () => $("#photoInput").click());
 
-/* Book navigation with curtain */
+/* ---------- Book navigation ---------- */
 const pages = [...document.querySelectorAll(".page")];
-const curtain = $("#curtain");
-const dotsEl = $("#dots");
-let current = 0, busy = true, opened = false;
+const curtain = $("#curtain"), gateCard = $("#gateCard"), dotsEl = $("#dots");
+let current = 0, busy = true, opened = false, navigated = false;
 const TURN = reduceMotion ? 0 : 600;
 
 pages.forEach((p, i) => {
@@ -433,17 +615,22 @@ function updateNav() {
   $("#count").textContent = `${pages[current].dataset.title} (${current + 1} of ${pages.length})`;
 }
 function show(i) {
-  pages[current].classList.remove("active", "in");
+  const leaving = pages[current];
+  leaving.classList.remove("active", "in");
+  if (leaving.id === "pgCake") stopMic();
   current = i;
   const p = pages[current];
   p.classList.add("active", "in");
   p.scrollTop = 0;
   if (opened) { p.setAttribute("tabindex", "-1"); p.focus({ preventScroll: true }); }
+  if (p.id === "pgDate") requestAnimationFrame(initScratch);
   updateNav();
 }
 function go(i) {
   if (busy || !opened || i === current || i < 0 || i >= pages.length) return;
-  busy = true;
+  busy = true; navigated = true;
+  $("#nextBtn").classList.remove("nudge");
+  $("#book").style.setProperty("--dir", i > current ? 1 : -1);
   curtain.classList.add("closed");
   setTimeout(() => {
     show(i);
@@ -461,34 +648,68 @@ addEventListener("keydown", (e) => {
 let tx = 0, ty = 0;
 addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
 addEventListener("touchend", (e) => {
-  if (e.target.closest("input, textarea, .sky")) return;
+  if (e.target.closest("input, textarea, .sky, .scratch, .cake, .pledge, .curtain")) return;
   const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
   if (Math.abs(dx) > 60 && Math.abs(dy) < 70) go(current + (dx < 0 ? 1 : -1));
 }, { passive: true });
 
-$("#openBtn").addEventListener("click", () => {
-  $("#gateCard").classList.add("gone");
+/* ---------- Opening the curtain: drag it or tap the button ---------- */
+function openInvite() {
+  if (opened) return;
+  opened = true;
+  curtain.classList.remove("peek", "intro", "dragging");
+  curtain.style.removeProperty("--open");
+  gateCard.style.opacity = "";
+  gateCard.classList.add("gone");
   curtain.classList.remove("closed");
   pages[0].classList.add("in");
-  opened = true;
   setTimeout(() => { busy = false; }, TURN);
   burst(innerWidth / 2, innerHeight / 2, 60);
+  buzz(20);
+  setTimeout(() => { if (!navigated && !reduceMotion) $("#nextBtn").classList.add("nudge"); }, 5000);
+}
+$("#openBtn").addEventListener("click", openInvite);
+let drag = null;
+curtain.addEventListener("pointerdown", (e) => {
+  if (opened || e.target.closest("button")) return;
+  drag = { x: e.clientX, p: 0 };
+  curtain.classList.remove("peek");
+  curtain.classList.add("dragging");
+  curtain.setPointerCapture(e.pointerId);
 });
+curtain.addEventListener("pointermove", (e) => {
+  if (!drag) return;
+  drag.p = Math.min(1, Math.abs(e.clientX - drag.x) / (innerWidth * 0.35));
+  curtain.style.setProperty("--open", drag.p.toFixed(3));
+  gateCard.style.opacity = Math.max(0, 1 - drag.p * 2).toFixed(3);
+});
+function endDrag() {
+  if (!drag) return;
+  const p = drag.p; drag = null;
+  if (p > 0.3) return openInvite();
+  curtain.classList.remove("dragging");
+  curtain.style.removeProperty("--open");
+  gateCard.style.opacity = "";
+}
+curtain.addEventListener("pointerup", endDrag);
+curtain.addEventListener("pointercancel", endDrag);
 updateNav();
 
-/* Countdown */
-function tick() {
-  let diff = Math.max(0, start - Date.now());
-  const d = Math.floor(diff / 864e5); diff -= d * 864e5;
-  const h = Math.floor(diff / 36e5);  diff -= h * 36e5;
-  const m = Math.floor(diff / 6e4);   diff -= m * 6e4;
-  const s = Math.floor(diff / 1e3);
-  $("#cdD").textContent = d; $("#cdH").textContent = h; $("#cdM").textContent = m; $("#cdS").textContent = s;
-  if (start - Date.now() <= 0) { $("#cdTitle").textContent = "Today is Avree's big day!"; $("#countRow").hidden = true; }
+/* Mouse parallax on the welcome page (desktop only) */
+if (!reduceMotion) {
+  let pxRaf = null, mx = 0, my = 0;
+  addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "mouse" || current !== 0 || !opened) return;
+    mx = (e.clientX / innerWidth - .5) * 2; my = (e.clientY / innerHeight - .5) * 2;
+    if (!pxRaf) pxRaf = requestAnimationFrame(() => {
+      pages[0].style.setProperty("--px", mx.toFixed(3));
+      pages[0].style.setProperty("--py", my.toFixed(3));
+      pxRaf = null;
+    });
+  });
 }
-tick(); setInterval(tick, 1000);
 
-/* Balloons */
+/* ---------- Balloons ---------- */
 const colors = ["#F4B63F", "#8E6AD1", "#F27C8A", "#4FB3A4", "#FFFEFA", "#F4B63F", "#8E6AD1"];
 const hints = ["Nice pop!", "Keep going!", "Wheee!", "Almost there!", "Two more!", "One left!"];
 let popped = 0;
@@ -510,10 +731,11 @@ function pop(b, color) {
   const r = b.getBoundingClientRect();
   burst(r.left + r.width / 2, r.top + r.height / 2, 28, [color, "#F4B63F", "#FFFEFA"]);
   b.classList.add("popped");
+  buzz(10);
   popped++;
   const hint = $("#hint");
   if (popped === colors.length) {
-    hint.innerHTML = 'Salamat! Avree says see you soon. <button class="btn" style="padding:.6rem 1rem;min-height:2.75rem;margin-left:.4rem" id="again" type="button">Again</button>';
+    hint.innerHTML = 'Salamat! Avree says see you soon. <button class="btn" style="padding:.5rem 1rem;margin-left:.4rem" id="again" type="button">Again</button>';
     $("#again").addEventListener("click", () => { makeBalloons(); hint.textContent = "Tap the balloons."; });
     burst(innerWidth / 2, innerHeight * .4, 120);
   } else {
@@ -522,7 +744,286 @@ function pop(b, color) {
 }
 makeBalloons();
 
-/* Confetti */
+/* ---------- Save the date: scratch card, then countdown ---------- */
+const sBox = $("#scratch"), sCv = $("#scratchCanvas"), sCtx = sCv.getContext("2d");
+let sReady = false, sDone = false, sLast = null, sMoves = 0, sW = 0;
+function initScratch() {
+  if (sDone) return;
+  const r = sBox.getBoundingClientRect();
+  if (!r.width || (sReady && Math.round(r.width) === sW)) return;
+  sW = Math.round(r.width);
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  sCv.width = Math.round(r.width * dpr); sCv.height = Math.round(r.height * dpr);
+  sCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  sCtx.globalCompositeOperation = "source-over";
+  const g = sCtx.createLinearGradient(0, 0, r.width, r.height);
+  g.addColorStop(0, "#F7C35C"); g.addColorStop(.5, "#F4B63F"); g.addColorStop(1, "#E3A12C");
+  sCtx.fillStyle = g; sCtx.fillRect(0, 0, r.width, r.height);
+  sCtx.fillStyle = "rgba(53,32,95,.10)";
+  for (let row = 0, y = 10; y < r.height; row++, y += 18) {
+    for (let x = (row % 2) * 9 + 6; x < r.width; x += 18) { sCtx.beginPath(); sCtx.arc(x, y, 2.5, 0, Math.PI * 2); sCtx.fill(); }
+  }
+  sCtx.fillStyle = "#35205F"; sCtx.textAlign = "center"; sCtx.textBaseline = "middle";
+  sCtx.font = "700 22px Figtree, system-ui, sans-serif";
+  sCtx.fillText("Scratch here", r.width / 2, r.height / 2);
+  sCtx.globalCompositeOperation = "destination-out";
+  sCtx.lineCap = "round"; sCtx.lineJoin = "round"; sCtx.lineWidth = 42;
+  sReady = true;
+}
+const sPt = (e) => { const r = sCv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+function sStroke(a, b) { sCtx.beginPath(); sCtx.moveTo(a.x, a.y); sCtx.lineTo(b.x + .01, b.y + .01); sCtx.stroke(); }
+sCv.addEventListener("pointerdown", (e) => {
+  if (!sReady || sDone) return;
+  sCv.setPointerCapture(e.pointerId);
+  sLast = sPt(e); sStroke(sLast, sLast);
+});
+sCv.addEventListener("pointermove", (e) => {
+  if (!sLast) return;
+  const p = sPt(e); sStroke(sLast, p); sLast = p;
+  if (++sMoves % 10 === 0) checkScratch();
+});
+function sEnd() { if (!sLast) return; sLast = null; checkScratch(); }
+sCv.addEventListener("pointerup", sEnd);
+sCv.addEventListener("pointercancel", sEnd);
+function checkScratch() {
+  if (sDone) return;
+  const d = sCtx.getImageData(0, 0, sCv.width, sCv.height).data;
+  let clear = 0, total = 0;
+  for (let i = 3; i < d.length; i += 160) { total++; if (d[i] < 50) clear++; }
+  if (clear / total > 0.45) revealDate();
+}
+function revealDate() {
+  if (sDone) return;
+  sDone = true;
+  sCv.classList.add("done");
+  $("#revealBtn").hidden = true;
+  $("#scratchHint").hidden = true;
+  $("#countWrap").hidden = false;
+  const r = sBox.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top + r.height / 2, 70);
+  buzz([15, 30, 15]);
+}
+$("#revealBtn").addEventListener("click", revealDate);
+addEventListener("resize", () => { if (pages[current].id === "pgDate") initScratch(); });
+
+function tick() {
+  const ms = start - Date.now();
+  if (ms <= 0) { $("#cdLabel").textContent = "Today is Avree's big day!"; $("#countRow").hidden = true; return; }
+  let diff = ms;
+  const d = Math.floor(diff / 864e5); diff -= d * 864e5;
+  const h = Math.floor(diff / 36e5);  diff -= h * 36e5;
+  const m = Math.floor(diff / 6e4);   diff -= m * 6e4;
+  const s = Math.floor(diff / 1e3);
+  $("#cdD").textContent = d; $("#cdH").textContent = h; $("#cdM").textContent = m; $("#cdS").textContent = s;
+}
+tick(); setInterval(tick, 1000);
+
+/* ---------- Program: mark the step that is happening now (only on the day) ---------- */
+const dayStart = new Date(CONFIG.start.slice(0, 10) + "T00:00:00+08:00");
+function toMinutes(t) {
+  const m = /(\d{1,2}):(\d{2})\s*(AM|PM)/i.exec(t);
+  if (!m) return null;
+  let h = +m[1] % 12; if (/pm/i.test(m[3])) h += 12;
+  return h * 60 + +m[2];
+}
+function markNow() {
+  const mins = (Date.now() - dayStart) / 6e4;
+  let idx = -1;
+  if (mins >= 0 && mins < 1440) CONFIG.program.forEach((p, i) => { const t = toMinutes(p.time); if (t !== null && mins >= t) idx = i; });
+  [...$("#timeline").children].forEach((li, i) => li.classList.toggle("now", i === idx));
+}
+markNow(); setInterval(markNow, 60000);
+
+/* ---------- Make a wish: blow out the candle ---------- */
+const cake = $("#cake"), candle = $("#candle");
+let lit = true, micStream = null, micRaf = null, audioCtx = null;
+const micOK = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) && window.isSecureContext;
+const cakeIntro = micOK
+  ? "Avree is turning one. Tap the candle to blow it out, or blow into your microphone."
+  : "Avree is turning one. Tap the candle to blow it out.";
+$("#cakeMsg").textContent = cakeIntro;
+if (!micOK) $("#micBtn").hidden = true;
+
+function blowOut() {
+  if (!lit) return;
+  lit = false;
+  stopMic();
+  cake.classList.add("out");
+  candle.disabled = true;
+  candle.setAttribute("aria-label", "The candle is out");
+  $("#cakeMsg").textContent = "Happy first birthday, Avree! Now write a wish for her.";
+  $("#wishBox").hidden = false;
+  $("#relightBtn").hidden = false;
+  $("#micBtn").hidden = true;
+  const r = candle.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top, 90);
+  buzz([20, 40, 20]);
+}
+candle.addEventListener("click", blowOut);
+$("#relightBtn").addEventListener("click", () => {
+  lit = true;
+  cake.classList.remove("out");
+  candle.disabled = false;
+  candle.setAttribute("aria-label", "Blow out the candle");
+  $("#cakeMsg").textContent = cakeIntro;
+  $("#relightBtn").hidden = true;
+  if (micOK) $("#micBtn").hidden = false;
+  candle.focus();
+});
+$("#micBtn").addEventListener("click", async () => {
+  if (micStream) { stopMic(); $("#cakeMsg").textContent = cakeIntro; return; }
+  try {
+    micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 512;
+    audioCtx.createMediaStreamSource(micStream).connect(analyser);
+    const buf = new Uint8Array(analyser.fftSize);
+    let loud = 0;
+    $("#micBtn").textContent = "Stop listening";
+    $("#cakeMsg").textContent = "Listening. Blow into your microphone.";
+    const loop = () => {
+      analyser.getByteTimeDomainData(buf);
+      let sum = 0;
+      for (const v of buf) { const x = (v - 128) / 128; sum += x * x; }
+      const rms = Math.sqrt(sum / buf.length);
+      cake.style.setProperty("--wind", Math.min(1, rms * 3).toFixed(2));
+      loud = rms > 0.2 ? loud + 1 : Math.max(0, loud - 1);
+      if (loud > 8) { blowOut(); return; }
+      micRaf = requestAnimationFrame(loop);
+    };
+    loop();
+  } catch {
+    stopMic();
+    $("#cakeMsg").textContent = "The microphone isn't available. Tap the candle to blow it out.";
+  }
+});
+function stopMic() {
+  if (micRaf) cancelAnimationFrame(micRaf);
+  micRaf = null;
+  if (micStream) micStream.getTracks().forEach(t => t.stop());
+  micStream = null;
+  if (audioCtx) audioCtx.close();
+  audioCtx = null;
+  cake.style.setProperty("--wind", 0);
+  $("#micBtn").textContent = "Blow with my microphone";
+}
+
+/* ---------- Gifts: copy buttons ---------- */
+document.addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-copy]");
+  if (!b) return;
+  if (!b.dataset.label) b.dataset.label = b.textContent;
+  try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = "Copied"; buzz(15); }
+  catch { b.textContent = b.dataset.copy; }
+  clearTimeout(b._t);
+  b._t = setTimeout(() => { b.textContent = b.dataset.label; }, 2500);
+});
+
+/* ---------- A request: press and hold to promise ---------- */
+const pledge = $("#pledge");
+let holdTimer = null, promised = false;
+function confirmPledge() {
+  if (promised) return;
+  promised = true;
+  clearTimeout(holdTimer);
+  pledge.classList.remove("holding");
+  pledge.classList.add("done");
+  pledge.setAttribute("aria-pressed", "true");
+  $("#pledgeText").textContent = "You promised. Salamat!";
+  $("#pledgeHint").textContent = "";
+  const s = $("#stamp"); s.hidden = false; s.classList.add("show");
+  const r = pledge.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top, 40);
+  buzz([15, 30, 15]);
+}
+pledge.addEventListener("pointerdown", (e) => {
+  if (promised) return;
+  if (pledge.setPointerCapture) pledge.setPointerCapture(e.pointerId);
+  pledge.classList.add("holding");
+  $("#pledgeHint").textContent = "Keep holding...";
+  holdTimer = setTimeout(confirmPledge, 1000);
+});
+function cancelHold() {
+  if (promised || !pledge.classList.contains("holding")) return;
+  clearTimeout(holdTimer);
+  pledge.classList.remove("holding");
+  $("#pledgeHint").textContent = "Hold a little longer to promise.";
+}
+pledge.addEventListener("pointerup", cancelHold);
+pledge.addEventListener("pointercancel", cancelHold);
+pledge.addEventListener("pointerleave", cancelHold);
+pledge.addEventListener("contextmenu", (e) => e.preventDefault());
+pledge.addEventListener("click", (e) => { if (e.detail === 0) confirmPledge(); }); // keyboard (Enter or Space)
+
+/* ---------- Add to Apple or Outlook calendar (.ics) ---------- */
+document.addEventListener("click", (e) => {
+  if (!e.target.closest("#calBtn")) return;
+  const ev = CONFIG.events[0];
+  const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Avree Invitation//EN", "BEGIN:VEVENT",
+    "UID:avree-" + start.getTime() + "@invitation", "DTSTAMP:" + utc(new Date()),
+    "DTSTART:" + utc(start), "DTEND:" + utc(endTime),
+    "SUMMARY:" + EVENT_TITLE,
+    "LOCATION:" + (ev.place + ", " + ev.address).replace(/[,;]/g, m => "\\" + m),
+    "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+  a.download = "avree-christening.ics";
+  document.body.appendChild(a); a.click(); a.remove();
+  burst(e.clientX, e.clientY, 24);
+});
+
+/* ---------- RSVP ---------- */
+const form = $("#rsvpForm"), status = $("#status");
+let guests = 1;
+function setGuests(n) {
+  guests = Math.min(20, Math.max(1, n));
+  $("#guestsOut").textContent = guests;
+  $("#minus").disabled = guests === 1;
+  $("#plus").disabled = guests === 20;
+  updatePreview();
+}
+$("#minus").addEventListener("click", () => { setGuests(guests - 1); buzz(8); });
+$("#plus").addEventListener("click", () => { setGuests(guests + 1); buzz(8); });
+const isGoing = () => form.elements.going.value === "yes";
+function composeMessage(name) {
+  const when = fmtDate.format(start);
+  let t = isGoing()
+    ? `Hi! This is ${name}. We will be at Avree's binyag and first birthday on ${when}. Number of guests: ${guests}.`
+    : `Hi! This is ${name}. Sorry, we can't make it to Avree's binyag and first birthday on ${when}, but we are sending our love.`;
+  const m = $("#msg").value.trim();
+  if (m) t += ` Message: ${m}`;
+  const w = $("#wish").value.trim();
+  if (w) t += ` My wish for Avree: ${w}`;
+  return t;
+}
+function updatePreview() { $("#preview").textContent = composeMessage($("#name").value.trim() || "(your name)"); }
+form.addEventListener("input", updatePreview);
+form.addEventListener("change", () => { $("#guestsRow").hidden = !isGoing(); updatePreview(); });
+$("#wish").addEventListener("input", updatePreview);
+function buildMessage() {
+  const name = $("#name").value.trim();
+  if (!name) { status.className = "status error"; status.textContent = "Please enter your name first."; $("#name").focus(); return null; }
+  status.className = "status";
+  return composeMessage(name);
+}
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const text = buildMessage(); if (!text) return;
+  if (!CONFIG.rsvpPhone) return copy(text);
+  location.href = `sms:+${CONFIG.rsvpPhone}?&body=${encodeURIComponent(text)}`;
+  status.textContent = "Opening your messages app. Press send to finish your reply.";
+  if (isGoing()) burst(innerWidth / 2, innerHeight / 2, 70);
+});
+$("#copyBtn").addEventListener("click", () => { const t = buildMessage(); if (t) copy(t); });
+async function copy(text) {
+  try { await navigator.clipboard.writeText(text); status.textContent = "Copied. Paste it into Messenger, Viber, or text to send."; buzz(15); }
+  catch { status.textContent = "Copy didn't work. Please select and copy the reply above."; }
+  if (isGoing()) burst(innerWidth / 2, innerHeight / 2, 50);
+}
+setGuests(1);
+
+/* ---------- Confetti ---------- */
 const cv = $("#confetti"), ctx = cv.getContext("2d");
 let parts = [], raf = null;
 function fit() { cv.width = innerWidth * devicePixelRatio; cv.height = innerHeight * devicePixelRatio; }
@@ -549,57 +1050,6 @@ function frame() {
   }
   raf = parts.length ? requestAnimationFrame(frame) : null;
   if (!raf) ctx.clearRect(0, 0, innerWidth, innerHeight);
-}
-
-/* Add to calendar */
-document.addEventListener("click", (e) => {
-  if (e.target.id !== "calBtn") return;
-  const pad = (n) => String(n).padStart(2, "0");
-  const utc = (d) => d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate()) + "T" + pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + "00Z";
-  const end = new Date(+start + 5 * 36e5);
-  const ev = CONFIG.events[0];
-  const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Avree Invitation//EN", "BEGIN:VEVENT",
-    "UID:avree-" + start.getTime() + "@invitation", "DTSTAMP:" + utc(new Date()),
-    "DTSTART:" + utc(start), "DTEND:" + utc(end),
-    "SUMMARY:Avree's Christening and First Birthday",
-    "LOCATION:" + (ev.place + ", " + ev.address).replace(/[,;]/g, m => "\\" + m),
-    "END:VEVENT", "END:VCALENDAR"].join("\r\n");
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
-  a.download = "avree-christening.ics";
-  document.body.appendChild(a); a.click(); a.remove();
-  burst(e.clientX, e.clientY, 24);
-});
-
-/* RSVP */
-const form = $("#rsvpForm"), status = $("#status");
-form.addEventListener("change", () => { $("#guestsRow").hidden = form.going.value === "no"; });
-function buildMessage() {
-  const name = form.name.value.trim();
-  if (!name) { status.className = "status error"; status.textContent = "Please enter your name first."; form.name.focus(); return null; }
-  status.className = "status";
-  const going = form.going.value === "yes";
-  const n = Math.max(1, parseInt(form.guests.value, 10) || 1);
-  let t = going
-    ? `Hi! This is ${name}. We will be at Avree's binyag and first birthday on ${fmtDate.format(start)}. Number of guests: ${n}.`
-    : `Hi! This is ${name}. Sorry, we can't make it to Avree's binyag and first birthday on ${fmtDate.format(start)}, but we are sending our love.`;
-  const m = form.msg.value.trim();
-  if (m) t += ` Message: ${m}`;
-  return t;
-}
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const text = buildMessage(); if (!text) return;
-  if (!CONFIG.rsvpPhone) return copy(text);
-  location.href = `sms:+${CONFIG.rsvpPhone}?&body=${encodeURIComponent(text)}`;
-  status.textContent = "Opening your messages app. Press send to finish your reply.";
-  if (form.going.value === "yes") burst(innerWidth / 2, innerHeight / 2, 70);
-});
-$("#copyBtn").addEventListener("click", () => { const t = buildMessage(); if (t) copy(t); });
-async function copy(text) {
-  try { await navigator.clipboard.writeText(text); status.textContent = "Copied. Paste it into Messenger, Viber, or text to send."; }
-  catch { status.textContent = "Copy didn't work. Please select and copy this: " + text; }
-  if (form.going.value === "yes") burst(innerWidth / 2, innerHeight / 2, 50);
 }
 </script>
 </body>
