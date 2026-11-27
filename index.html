@@ -285,7 +285,51 @@
 
   canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 60; }
 
+  /* Interactive extras */
+  .ambient { position: fixed; inset: 0 0 var(--nav-h) 0; z-index: 30; pointer-events: none; overflow: hidden; }
+  .ambient i { position: absolute; bottom: -2rem; left: var(--x); width: var(--s); height: var(--s); color: var(--c); opacity: 0; animation: floatUp var(--t) linear var(--dl) infinite; }
+  .ambient i::before { content: ""; position: absolute; inset: 0; background: currentColor; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+  .ambient i.bl::before { clip-path: none; border-radius: 50% 50% 50% 50% / 58% 58% 42% 42%; }
+  @keyframes floatUp { 0% { transform: translate(0, 0) rotate(0); opacity: 0; } 10% { opacity: .55; } 90% { opacity: .35; } 100% { transform: translate(var(--dx), -105vh) rotate(180deg); opacity: 0; } }
+  .progress { position: fixed; left: 0; right: 0; bottom: var(--nav-h); height: 4px; z-index: 41; background: rgba(255,255,255,.18); pointer-events: none; }
+  .progress b { display: block; height: 100%; width: 100%; background: var(--mango); transform-origin: left; transform: scaleX(var(--prog, .125)); transition: transform .5s cubic-bezier(.3,.8,.3,1); }
+  .js .rv { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; transition-delay: var(--rd, 0s); }
+  .js .rv.seen { opacity: 1; transform: none; }
+  .count-row strong.tock { animation: tock .35s ease-out; }
+  @keyframes tock { from { transform: translateY(-.25em); opacity: .4; } to { transform: none; opacity: 1; } }
+  .wish-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .6rem; }
+  .wish-thanks { margin-top: .6rem; font-weight: 700; color: var(--mango); }
+  .wall { list-style: none; padding: 0; margin-top: .75rem; display: grid; gap: .5rem; }
+  .wall li { background: rgba(255,255,255,.1); border-left: 4px solid var(--mango); border-radius: 0 .6rem .6rem 0; padding: .5rem .85rem; animation: rise .5s both; }
+  .thank-card { margin-top: 1rem; padding: 1rem 1.25rem; border-radius: 1rem; background: var(--ube); color: var(--white); font-family: var(--display); font-size: 1.25rem; animation: rise .6s both; }
+
+  /* Photo spots */
+  .spot { position: relative; width: clamp(9rem, 46vw, 14rem); aspect-ratio: 4 / 5; margin: 0 auto 1rem; padding: .4rem; border-radius: 1.4rem; background: var(--white); border: 3px solid var(--mango); box-shadow: 0 .5rem 1.4rem rgba(42,27,71,.25), 0 0 0 .35rem rgba(244,182,63,.25); rotate: -1.5deg; }
+  .spot:nth-of-type(even) { rotate: 1.5deg; }
+  .spot.photo { width: clamp(8rem, 34vw, 12rem); margin: 0 auto 1rem; border-radius: 999px 999px 1.4rem 1.4rem; overflow: hidden; }
+  .spot-btn { display: block; position: relative; width: 100%; height: 100%; padding: 0; border: 0; border-radius: inherit; overflow: hidden; background: transparent; cursor: default; font: inherit; color: inherit; }
+  .spot-btn.has { cursor: zoom-in; }
+  .spot-btn:focus-visible { outline: 3px solid var(--ube); outline-offset: 3px; }
+  .spot .spot-btn img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .spot-btn.has img { animation: spotIn .9s cubic-bezier(.2,.7,.2,1) both; transition: transform .4s ease; }
+  .spot-btn.has:hover img { transform: scale(1.05); }
+  .spot-empty { position: absolute; inset: 0; display: grid; place-content: center; gap: .25rem; text-align: center; padding: .5rem; border-radius: inherit; color: var(--ube); background: repeating-linear-gradient(45deg, #FFE6F0 0 .7rem, #FFF3F8 .7rem 1.4rem); }
+  .spot-empty b { font-size: 2rem; font-weight: 400; color: #E5649A; }
+  .spot-empty span { font-family: var(--display); font-size: 1.15rem; }
+  .spot-empty small { font-size: .8rem; opacity: .75; }
+  .spot-empty b { animation: bob 3s ease-in-out infinite alternate; }
+  @keyframes spotIn { from { opacity: 0; transform: scale(1.12); } to { opacity: 1; transform: none; } }
+  .lightbox { border: 0; padding: 1rem; background: rgba(20,12,38,.92); color: var(--white); max-width: 100vw; max-height: 100dvh; width: 100%; height: 100%; text-align: center; }
+  .lightbox[open] { display: grid; grid-template-rows: 1fr auto auto; gap: .6rem; justify-items: center; animation: spotIn .3s both; }
+  .lightbox img { max-width: 100%; max-height: 100%; min-height: 0; object-fit: contain; border-radius: .8rem; }
+  .lightbox::backdrop { background: rgba(20,12,38,.7); }
   @media (prefers-reduced-motion: reduce) {
+    .spot { rotate: none; }
+    .spot-btn.has img, .spot-btn.has:hover img, .spot-empty b, .lightbox[open] { animation: none; transition: none; transform: none; }
+    .ambient { display: none; }
+    .js .rv { opacity: 1; transform: none; transition: none; }
+    .progress b { transition: none; }
+    .count-row strong.tock, .wall li, .thank-card { animation: none; }
     .balloon, .flame i, .nav .btn.nudge, .curtain.peek .half { animation: none !important; }
     .page.in .page-inner > *, .page.in .photo img, .page.in .photo::after, .page.in .welcome h1, #stamp.show, .cake.out .smoke { animation: none; }
     .welcome .photo, .welcome h1, .welcome .sky { translate: none; transition: none; }
@@ -294,17 +338,13 @@
 </style>
 </head>
 <body>
+<script>document.documentElement.classList.add('js')</script>
 
 <div class="book" id="book">
 
   <!-- 1 Welcome -->
   <section class="page p-banig banig active" id="pgWelcome" data-title="Welcome" aria-label="Welcome">
     <div class="page-inner welcome">
-      <figure class="photo" id="photoFrame">
-        <img id="photo" alt="Avree Bermudez" hidden>
-        <label class="photo-empty" id="photoEmpty" for="photoInput"><span>Tap to add Avree's photo</span></label>
-        <input type="file" id="photoInput" accept="image/*" class="sr-only">
-      </figure>
       <p>Join us for the binyag and first birthday of</p>
       <h1>Avree</h1>
       <p class="surname">Bermudez</p>
@@ -381,6 +421,9 @@
         <label for="wish">Your wish for Avree</label>
         <textarea id="wish" rows="2" placeholder="For example: May you grow up kind and happy."></textarea>
         <p class="small">Your wish will be added to your reply on the last page.</p>
+        <div class="wish-actions"><button class="btn" id="saveWish" type="button">Save my wish</button></div>
+        <p class="wish-thanks" id="wishThanks" role="status"></p>
+        <ul class="wall" id="wall" aria-label="Wishes saved on this device"></ul>
       </div>
     </div>
   </section>
@@ -451,12 +494,16 @@
           <button class="btn ghost" type="button" id="copyBtn">Copy my reply</button>
         </div>
         <p class="status" id="status" role="status"></p>
+        <p class="thank-card" id="thankCard" role="status" hidden></p>
       </form>
       <p class="thanks">Maraming salamat!</p>
       <p class="hosts" id="hosts"></p>
     </div>
   </section>
 </div>
+
+<div class="ambient" id="ambient" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><b></b></div>
 
 <nav class="nav" aria-label="Invitation pages">
   <button class="btn" id="backBtn" type="button">Back</button>
@@ -478,6 +525,12 @@
   </div>
 </div>
 
+<dialog class="lightbox" id="lightbox" aria-label="Photo">
+  <img id="lbImg" alt="">
+  <p id="lbCap"></p>
+  <button class="btn" id="lbClose" type="button">Close</button>
+</dialog>
+
 <canvas id="confetti" aria-hidden="true"></canvas>
 
 <script>
@@ -485,8 +538,6 @@
 const CONFIG = {
   // Placeholder date: Saturday, December 12, 2026, Philippine time (+08:00). Change to your real date.
   start: "2026-12-12T10:00:00+08:00",
-  // Avree's photo: put the file in this folder (for example avree.jpg) and set the name here.
-  photo: "avree.jpg",
   hosts: "With love, Jim & Angela Bermudez",
   welcome: "Avree is turning one, and we, Jim and Angela, are celebrating her binyag and first birthday in one day. Please join us for the blessing and the handaan afterward.",
   events: [
@@ -589,14 +640,43 @@ if (CONFIG.godparents.length) {
   $("#gpList").innerHTML = CONFIG.godparents.map(n => `<li>${esc(n)}</li>`).join("");
 }
 
-/* ---------- Photo ---------- */
-function showPhoto(src) { const img = $("#photo"); img.src = src; img.hidden = false; $("#photoEmpty").hidden = true; }
-if (CONFIG.photo) { const probe = new Image(); probe.onload = () => showPhoto(CONFIG.photo); probe.src = CONFIG.photo; }
-$("#photoInput").addEventListener("change", (e) => { const f = e.target.files[0]; if (f) showPhoto(URL.createObjectURL(f)); });
-$("#photo").addEventListener("click", () => $("#photoInput").click());
+/* ---------- Photo spots: images/avree-1.jpg to avree-8.jpg, one per page ---------- */
+const PHOTO_DIR = "images/", PHOTO_EXT = ".jpg";
+const lightbox = $("#lightbox"), lbImg = $("#lbImg"), lbCap = $("#lbCap");
+let lbFrom = null;
+document.querySelectorAll(".page").forEach((pg, i) => {
+  const n = i + 1, label = "Avree photo " + n;
+  const fig = document.createElement("figure");
+  fig.className = "spot rv" + (n === 1 ? " photo" : "");
+  fig.innerHTML = `<button type="button" class="spot-btn" aria-label="${label}. Photo coming soon." disabled>
+      <span class="spot-empty" aria-hidden="true"><b>&#9825;</b><span>${label}</span><small>Photo coming soon</small></span>
+      <img alt="${label}" loading="lazy" decoding="async" hidden>
+    </button>`;
+  const btn = fig.firstElementChild, img = btn.querySelector("img");
+  img.addEventListener("load", () => {
+    img.hidden = false; btn.disabled = false; btn.classList.add("has");
+    btn.querySelector(".spot-empty").hidden = true;
+    btn.setAttribute("aria-label", "Enlarge " + label);
+  });
+  img.addEventListener("error", () => { img.hidden = true; });
+  img.src = PHOTO_DIR + "avree-" + n + PHOTO_EXT;
+  btn.addEventListener("click", () => {
+    if (!btn.classList.contains("has")) return;
+    lbFrom = btn; lbImg.src = img.currentSrc || img.src; lbImg.alt = label; lbCap.textContent = label;
+    lightbox.showModal();
+  });
+  const inner = pg.querySelector(".page-inner"), h = inner.querySelector("h2.title");
+  if (n === 1) inner.insertBefore(fig, inner.firstChild);
+  else h.after(fig);
+});
+lightbox.addEventListener("click", (e) => { if (e.target === lightbox || e.target.closest("#lbClose")) lightbox.close(); });
+lightbox.addEventListener("close", () => { lbImg.removeAttribute("src"); if (lbFrom) lbFrom.focus(); });
 
 /* ---------- Book navigation ---------- */
 const pages = [...document.querySelectorAll(".page")];
+/* Scroll reveals: cards fade in as they enter view (skipped when IntersectionObserver is missing) */
+const io = "IntersectionObserver" in window ? new IntersectionObserver((es) => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add("seen"); io.unobserve(en.target); } }), { threshold: .15 }) : null;
+document.querySelectorAll(".event, .timeline li, .gp, .scratch, .count-wrap, .form-actions, .preview").forEach((el, i) => { el.classList.add("rv"); el.style.setProperty("--rd", ((i % 3) * .08) + "s"); });
 const curtain = $("#curtain"), gateCard = $("#gateCard"), dotsEl = $("#dots");
 let current = 0, busy = true, opened = false, navigated = false;
 const TURN = reduceMotion ? 0 : 600;
@@ -609,6 +689,7 @@ pages.forEach((p, i) => {
   dotsEl.appendChild(d);
 });
 function updateNav() {
+  document.documentElement.style.setProperty("--prog", ((current + 1) / pages.length).toFixed(3));
   $("#backBtn").disabled = current === 0;
   $("#nextBtn").disabled = current === pages.length - 1;
   [...dotsEl.children].forEach((d, i) => d.setAttribute("aria-current", i === current ? "true" : "false"));
@@ -624,6 +705,7 @@ function show(i) {
   p.scrollTop = 0;
   if (opened) { p.setAttribute("tabindex", "-1"); p.focus({ preventScroll: true }); }
   if (p.id === "pgDate") requestAnimationFrame(initScratch);
+  p.querySelectorAll(".rv:not(.seen)").forEach(el => io ? io.observe(el) : el.classList.add("seen"));
   updateNav();
 }
 function go(i) {
@@ -641,14 +723,14 @@ function go(i) {
 $("#nextBtn").addEventListener("click", () => go(current + 1));
 $("#backBtn").addEventListener("click", () => go(current - 1));
 addEventListener("keydown", (e) => {
-  if (/INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  if (/INPUT|TEXTAREA/.test(document.activeElement.tagName) || document.querySelector("dialog[open]")) return;
   if (e.key === "ArrowRight" || e.key === "PageDown") go(current + 1);
   if (e.key === "ArrowLeft" || e.key === "PageUp") go(current - 1);
 });
 let tx = 0, ty = 0;
 addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
 addEventListener("touchend", (e) => {
-  if (e.target.closest("input, textarea, .sky, .scratch, .cake, .pledge, .curtain")) return;
+  if (e.target.closest("input, textarea, dialog, .sky, .scratch, .cake, .pledge, .curtain")) return;
   const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
   if (Math.abs(dx) > 60 && Math.abs(dy) < 70) go(current + (dx < 0 ? 1 : -1));
 }, { passive: true });
@@ -814,7 +896,10 @@ function tick() {
   const h = Math.floor(diff / 36e5);  diff -= h * 36e5;
   const m = Math.floor(diff / 6e4);   diff -= m * 6e4;
   const s = Math.floor(diff / 1e3);
-  $("#cdD").textContent = d; $("#cdH").textContent = h; $("#cdM").textContent = m; $("#cdS").textContent = s;
+  [["#cdD", d], ["#cdH", h], ["#cdM", m], ["#cdS", s]].forEach(([id, v]) => {
+    const el = $(id);
+    if (el.textContent !== String(v)) { el.textContent = v; if (!reduceMotion && id === "#cdS") { el.classList.remove("tock"); void el.offsetWidth; el.classList.add("tock"); } }
+  });
 }
 tick(); setInterval(tick, 1000);
 
@@ -907,6 +992,34 @@ function stopMic() {
   audioCtx = null;
   cake.style.setProperty("--wind", 0);
   $("#micBtn").textContent = "Blow with my microphone";
+}
+
+/* ---------- Guestbook: wishes stay on this device (localStorage), no backend ---------- */
+const WALL_KEY = "avree-wishes";
+const readWall = () => { try { return JSON.parse(localStorage.getItem(WALL_KEY)) || []; } catch { return []; } };
+function drawWall() { $("#wall").innerHTML = readWall().map(w => `<li>${esc(w)}</li>`).join(""); }
+drawWall();
+$("#saveWish").addEventListener("click", () => {
+  const w = $("#wish").value.trim();
+  const out = $("#wishThanks");
+  if (!w) { out.textContent = "Write a short wish first."; $("#wish").focus(); return; }
+  try { localStorage.setItem(WALL_KEY, JSON.stringify([w.slice(0, 280), ...readWall()].slice(0, 20))); } catch {}
+  drawWall();
+  out.textContent = "Salamat! Your wish is saved on this device. Send it to us from the last page.";
+  const r = $("#saveWish").getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top, 40, ["#F4B63F", "#F27C8A", "#FFFEFA"]);
+  buzz(15);
+});
+
+/* ---------- Floating sparkles and balloons (decor only, hidden for reduced motion) ---------- */
+if (!reduceMotion) {
+  const amb = $("#ambient"), cols = ["#F4B63F", "#F27C8A", "#8E6AD1", "#4FB3A4", "#FFFEFA"];
+  for (let i = 0; i < 12; i++) {
+    const e = document.createElement("i");
+    if (i % 4 === 0) e.className = "bl";
+    e.style.cssText = `--x:${(i * 8.3 + 3) % 96}%;--s:${i % 4 === 0 ? 16 : 8 + (i % 3) * 4}px;--c:${cols[i % cols.length]};--t:${14 + (i % 5) * 3}s;--dl:${-i * 2.3}s;--dx:${(i % 2 ? 1 : -1) * (20 + i * 3)}px`;
+    amb.appendChild(e);
+  }
 }
 
 /* ---------- Gifts: copy buttons ---------- */
@@ -1013,15 +1126,22 @@ form.addEventListener("submit", (e) => {
   if (!CONFIG.rsvpPhone) return copy(text);
   location.href = `sms:+${CONFIG.rsvpPhone}?&body=${encodeURIComponent(text)}`;
   status.textContent = "Opening your messages app. Press send to finish your reply.";
+  thank();
   if (isGoing()) burst(innerWidth / 2, innerHeight / 2, 70);
 });
 $("#copyBtn").addEventListener("click", () => { const t = buildMessage(); if (t) copy(t); });
 async function copy(text) {
   try { await navigator.clipboard.writeText(text); status.textContent = "Copied. Paste it into Messenger, Viber, or text to send."; buzz(15); }
-  catch { status.textContent = "Copy didn't work. Please select and copy the reply above."; }
+  catch { status.textContent = "Copy didn't work. Please select and copy the reply above."; return; }
+  thank();
   if (isGoing()) burst(innerWidth / 2, innerHeight / 2, 50);
 }
 setGuests(1);
+function thank() {
+  const c = $("#thankCard");
+  c.textContent = isGoing() ? `Salamat, ${$("#name").value.trim()}! We can't wait to celebrate with you.` : `Salamat, ${$("#name").value.trim()}. We'll miss you and feel your love.`;
+  c.hidden = false;
+}
 
 /* ---------- Confetti ---------- */
 const cv = $("#confetti"), ctx = cv.getContext("2d");
