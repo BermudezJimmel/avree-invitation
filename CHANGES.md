@@ -3,6 +3,9 @@
 File: `index.html` (single file, no libraries, no CDN). Backup of the old page: `../avree-invitation-backups/index-before-interactive.html`.
 Copy, dates, venue, links and the ninong/ninang list are unchanged. Edit details in the `CONFIG` block near the bottom of `index.html`.
 
+## Pink theme (branch pink-theme)
+Colours only: ube/mango palette replaced by a soft pastel set (dusty rose, blush, petal, cream, pale gold). Details and contrast ratios in `THEME-NOTES.md`. `images/og-image.png` regenerated in pink. No copy, feature, link or layout change.
+
 ## New features and how to try them
 
 | Feature | How to try it |
