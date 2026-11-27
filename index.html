@@ -6,6 +6,19 @@
 <title>Avree's Christening and First Birthday</title>
 <meta name="description" content="You're invited to the christening and first birthday of Avree Bermudez.">
 <meta name="theme-color" content="#35205F">
+<!-- Placeholders: set og:url and the two image URLs to your real page address (see FILL-IN.md). Link previews need absolute URLs. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Avree's Christening and First Birthday">
+<meta property="og:description" content="You're invited to the binyag and first birthday of Avree Bermudez. Tap to open your invitation.">
+<meta property="og:url" content="https://bermudezjimmel.github.io/avree-invitation/">
+<meta property="og:image" content="https://bermudezjimmel.github.io/avree-invitation/images/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Avree's christening and first birthday invitation">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Avree's Christening and First Birthday">
+<meta name="twitter:description" content="You're invited to the binyag and first birthday of Avree Bermudez.">
+<meta name="twitter:image" content="https://bermudezjimmel.github.io/avree-invitation/images/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Young+Serif&display=swap" rel="stylesheet">
@@ -97,6 +110,7 @@
   .welcome .surname { font-family: var(--display); font-size: clamp(1.4rem, 6vw, 2.2rem); color: var(--mango); }
   .play-hint { margin: 1rem 0 0; font-size: .95rem; min-height: 1.6em; }
   .sky { position: relative; height: clamp(8rem, 22vh, 12rem); margin-top: .5rem; }
+  @media (max-width: 30rem) { .sky { height: 10.5rem; } }
   .balloon {
     position: absolute; bottom: 0; border: 0; padding: 0;
     width: clamp(2.8rem, 9vw, 4.2rem); aspect-ratio: 5 / 6;
@@ -230,6 +244,7 @@
   #guestsOut { min-width: 2ch; text-align: center; font-family: var(--display); font-size: 1.8rem; color: var(--ube); }
   .preview { border-left: 4px solid var(--mango); background: var(--ube-mist); padding: .75rem 1rem; border-radius: 0 .6rem .6rem 0; }
   .form-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .form-actions .btn[hidden] { display: none; }
   .status { min-height: 1.6em; font-weight: 700; color: var(--dahon); }
   .error { color: #A3262A; }
   .thanks { margin-top: 1.75rem; font-family: var(--display); font-size: 1.4rem; color: var(--ube); }
@@ -261,7 +276,7 @@
   .curtain.dragging { cursor: grabbing; }
   .curtain .half {
     position: absolute; top: 0; bottom: 0; width: 50.5%;
-    transition: transform .6s cubic-bezier(.7,0,.25,1);
+    transition: transform .3s cubic-bezier(.7,0,.25,1);
     background-color: var(--ube-deep);
     background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0 14px, rgba(0,0,0,.14) 14px 28px);
   }
@@ -293,6 +308,12 @@
   @keyframes floatUp { 0% { transform: translate(0, 0) rotate(0); opacity: 0; } 10% { opacity: .55; } 90% { opacity: .35; } 100% { transform: translate(var(--dx), -105vh) rotate(180deg); opacity: 0; } }
   .progress { position: fixed; left: 0; right: 0; bottom: var(--nav-h); height: 4px; z-index: 41; background: rgba(255,255,255,.18); pointer-events: none; }
   .progress b { display: block; height: 100%; width: 100%; background: var(--mango); transform-origin: left; transform: scaleX(var(--prog, .125)); transition: transform .5s cubic-bezier(.3,.8,.3,1); }
+  html:not(.js) body { overflow: auto; }
+  html:not(.js) .book, html:not(.js) .nav, html:not(.js) .curtain, html:not(.js) .ambient, html:not(.js) .progress { display: none; }
+  .ns { max-width: 30rem; margin: 0 auto; padding: 2rem 1.25rem; color: var(--white); text-align: center; }
+  .ns h1 { font-family: var(--display); font-weight: 400; font-size: 3.5rem; line-height: 1; margin: .4rem 0 1rem; }
+  .ns p { margin-bottom: .6rem; }
+  .skip { margin-top: 1.25rem; }
   .js .rv { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; transition-delay: var(--rd, 0s); }
   .js .rv.seen { opacity: 1; transform: none; }
   .count-row strong.tock { animation: tock .35s ease-out; }
@@ -340,6 +361,20 @@
 <body>
 <script>document.documentElement.classList.add('js')</script>
 
+<noscript>
+  <div class="ns">
+    <p>Imbitasyon</p>
+    <h1>Avree</h1>
+    <p>You're invited to the binyag and first birthday of Avree Bermudez.</p>
+    <p><strong>Saturday, December 12, 2026, 10:00 AM</strong> (placeholder date)</p>
+    <p>Binyag: Your church name here, Church address, City, Philippines</p>
+    <p>Handaan: Your venue name here, Venue address, City, Philippines</p>
+    <p>Please reply by December 1, 2026. Contact: your phone number here.</p>
+    <p>With love, Jim &amp; Angela Bermudez</p>
+    <p>Turn on JavaScript to see the full interactive invitation.</p>
+  </div>
+</noscript>
+
 <div class="book" id="book">
 
   <!-- 1 Welcome -->
@@ -352,6 +387,7 @@
         <p class="play-hint" id="hint" aria-live="polite">Tap the balloons.</p>
         <div class="sky" id="sky"></div>
       </div>
+      <button class="link-btn skip" id="skipBtn" type="button">Skip to the details</button>
     </div>
   </section>
 
@@ -492,6 +528,8 @@
         <div class="form-actions">
           <button class="btn" type="submit" id="sendBtn">Send my reply by text</button>
           <button class="btn ghost" type="button" id="copyBtn">Copy my reply</button>
+          <button class="btn ghost" type="button" id="msgrBtn" hidden>Reply on Messenger</button>
+          <button class="btn ghost" type="button" id="vbrBtn" hidden>Reply on Viber</button>
         </div>
         <p class="status" id="status" role="status"></p>
         <p class="thank-card" id="thankCard" role="status" hidden></p>
@@ -566,8 +604,14 @@ const CONFIG = {
   ],
   rsvpNote: "Please reply by December 1, 2026 so we can prepare enough food and seats.",
   // Your mobile number in international format, digits only. Example: 639171234567. Leave empty to hide "Send by text".
-  rsvpPhone: ""
+  rsvpPhone: "",
+  // Your Messenger username (the part after m.me/). Example: jim.bermudez. Leave empty to hide the Messenger button.
+  rsvpMessenger: "",
+  // Your Viber number in international format, digits only. Example: 639171234567. Leave empty to hide the Viber button.
+  rsvpViber: ""
 };
+/* NOTE: the <meta> link-preview tags in <head> and the <noscript> block are plain HTML.
+   Edit them by hand with the same values (see FILL-IN.md). */
 /* ================================================================================== */
 
 const $ = (s) => document.querySelector(s);
@@ -594,6 +638,10 @@ $("#ruleNote").textContent = CONFIG.ruleNote;
 $("#rsvpNote").textContent = CONFIG.rsvpNote;
 $("#hosts").textContent = CONFIG.hosts;
 if (!CONFIG.rsvpPhone) $("#sendBtn").hidden = true;
+if (!CONFIG.rsvpMessenger) $("#msgrBtn").hidden = true;
+if (!CONFIG.rsvpViber) $("#vbrBtn").hidden = true;
+$("#book").inert = true; $("#book").setAttribute("aria-hidden", "true");
+$(".nav").inert = true;
 
 const gcalUrl = (ev) => "https://calendar.google.com/calendar/render?action=TEMPLATE"
   + "&text=" + encodeURIComponent(EVENT_TITLE)
@@ -650,7 +698,7 @@ document.querySelectorAll(".page").forEach((pg, i) => {
   fig.className = "spot rv" + (n === 1 ? " photo" : "");
   fig.innerHTML = `<button type="button" class="spot-btn" aria-label="${label}. Photo coming soon." disabled>
       <span class="spot-empty" aria-hidden="true"><b>&#9825;</b><span>${label}</span><small>Photo coming soon</small></span>
-      <img alt="${label}" loading="lazy" decoding="async" hidden>
+      <img alt="${label}" decoding="async" hidden>
     </button>`;
   const btn = fig.firstElementChild, img = btn.querySelector("img");
   img.addEventListener("load", () => {
@@ -679,7 +727,7 @@ const io = "IntersectionObserver" in window ? new IntersectionObserver((es) => e
 document.querySelectorAll(".event, .timeline li, .gp, .scratch, .count-wrap, .form-actions, .preview").forEach((el, i) => { el.classList.add("rv"); el.style.setProperty("--rd", ((i % 3) * .08) + "s"); });
 const curtain = $("#curtain"), gateCard = $("#gateCard"), dotsEl = $("#dots");
 let current = 0, busy = true, opened = false, navigated = false;
-const TURN = reduceMotion ? 0 : 600;
+const TURN = reduceMotion ? 0 : 300;
 
 pages.forEach((p, i) => {
   const d = document.createElement("button");
@@ -695,6 +743,7 @@ function updateNav() {
   [...dotsEl.children].forEach((d, i) => d.setAttribute("aria-current", i === current ? "true" : "false"));
   $("#count").textContent = `${pages[current].dataset.title} (${current + 1} of ${pages.length})`;
 }
+function reveal(p) { p.querySelectorAll(".rv:not(.seen)").forEach(el => io ? io.observe(el) : el.classList.add("seen")); }
 function show(i) {
   const leaving = pages[current];
   leaving.classList.remove("active", "in");
@@ -705,10 +754,10 @@ function show(i) {
   p.scrollTop = 0;
   if (opened) { p.setAttribute("tabindex", "-1"); p.focus({ preventScroll: true }); }
   if (p.id === "pgDate") requestAnimationFrame(initScratch);
-  p.querySelectorAll(".rv:not(.seen)").forEach(el => io ? io.observe(el) : el.classList.add("seen"));
+  reveal(p);
   updateNav();
 }
-function go(i) {
+function go(i, fromHistory) {
   if (busy || !opened || i === current || i < 0 || i >= pages.length) return;
   busy = true; navigated = true;
   $("#nextBtn").classList.remove("nudge");
@@ -716,10 +765,17 @@ function go(i) {
   curtain.classList.add("closed");
   setTimeout(() => {
     show(i);
+    if (!fromHistory) history.pushState({ p: i }, "", "#p" + (i + 1));
     curtain.classList.remove("closed");
     setTimeout(() => { busy = false; }, TURN);
   }, TURN);
 }
+$("#skipBtn").addEventListener("click", () => go(2));
+/* Back button: each page turn is a history entry */
+addEventListener("popstate", (e) => {
+  const i = e.state && e.state.p;
+  if (opened && Number.isInteger(i) && i !== current) go(i, true);
+});
 $("#nextBtn").addEventListener("click", () => go(current + 1));
 $("#backBtn").addEventListener("click", () => go(current - 1));
 addEventListener("keydown", (e) => {
@@ -745,6 +801,9 @@ function openInvite() {
   gateCard.classList.add("gone");
   curtain.classList.remove("closed");
   pages[0].classList.add("in");
+  $("#book").inert = false; $("#book").removeAttribute("aria-hidden"); $(".nav").inert = false;
+  reveal(pages[0]);
+  history.replaceState({ p: 0 }, "", "#p1");
   setTimeout(() => { busy = false; }, TURN);
   burst(innerWidth / 2, innerHeight / 2, 60);
   buzz(20);
@@ -795,6 +854,7 @@ if (!reduceMotion) {
 const colors = ["#F4B63F", "#8E6AD1", "#F27C8A", "#4FB3A4", "#FFFEFA", "#F4B63F", "#8E6AD1"];
 const hints = ["Nice pop!", "Keep going!", "Wheee!", "Almost there!", "Two more!", "One left!"];
 let popped = 0;
+const narrow = matchMedia("(max-width: 30rem)"); // zigzag two rows so balloons do not overlap
 function makeBalloons() {
   const sky = $("#sky"); sky.innerHTML = ""; popped = 0;
   colors.forEach((c, i) => {
@@ -803,7 +863,7 @@ function makeBalloons() {
     b.setAttribute("aria-label", "Pop balloon " + (i + 1));
     b.style.setProperty("--c", c);
     b.style.left = (4 + i * (88 / colors.length)) + "%";
-    b.style.bottom = (i % 2 ? 1.5 : 3) + "rem";
+    b.style.bottom = narrow.matches ? (i % 2 ? 4.8 : 1.2) + "rem" : (i % 2 ? 1.5 : 3) + "rem";
     b.style.setProperty("--d", (3.6 + (i % 4) * 0.7) + "s");
     b.addEventListener("click", () => pop(b, c));
     sky.appendChild(b);
@@ -890,7 +950,11 @@ addEventListener("resize", () => { if (pages[current].id === "pgDate") initScrat
 
 function tick() {
   const ms = start - Date.now();
-  if (ms <= 0) { $("#cdLabel").textContent = "Today is Avree's big day!"; $("#countRow").hidden = true; return; }
+  if (ms <= 0) {
+    const over = Date.now() >= new Date(CONFIG.start.slice(0, 10) + "T00:00:00+08:00").getTime() + 864e5;
+    $("#cdLabel").textContent = over ? "Thank you for celebrating with Avree. Salamat sa inyong lahat!" : "Today is Avree's big day!";
+    $("#countRow").hidden = true; return;
+  }
   let diff = ms;
   const d = Math.floor(diff / 864e5); diff -= d * 864e5;
   const h = Math.floor(diff / 36e5);  diff -= h * 36e5;
@@ -1120,15 +1184,39 @@ function buildMessage() {
   status.className = "status";
   return composeMessage(name);
 }
+/* Open an app link. Thank the guest only after a real copy or after the page really lost focus
+   (the app opened). A silent failure (blocked sms: or viber:) shows a hint and no thank-you. */
+async function sendVia(url, what) {
+  const text = buildMessage(); if (!text) return;
+  let copied = false, left = false;
+  try { await navigator.clipboard.writeText(text); copied = true; } catch {}
+  const mark = () => { left = true; };
+  addEventListener("pagehide", mark); addEventListener("blur", mark);
+  const vis = () => { if (document.hidden) left = true; };
+  document.addEventListener("visibilitychange", vis);
+  location.href = url;
+  status.textContent = `Opening ${what}...` + (copied ? " Your reply is copied too. Paste it if it does not appear." : "");
+  setTimeout(() => {
+    removeEventListener("pagehide", mark); removeEventListener("blur", mark);
+    document.removeEventListener("visibilitychange", vis);
+    if (left || copied) {
+      status.textContent = left ? `Press send in ${what} to finish your reply.` + (copied ? " (Reply copied too.)" : "") : `Could not open ${what}. Your reply is copied. Paste it into a message to us.`;
+      thank();
+      if (isGoing()) burst(innerWidth / 2, innerHeight / 2, 50);
+    } else {
+      status.className = "status error";
+      status.textContent = `Could not open ${what}. Please select the reply above and send it to us yourself.`;
+    }
+  }, 1500);
+}
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  const text = buildMessage(); if (!text) return;
-  if (!CONFIG.rsvpPhone) return copy(text);
-  location.href = `sms:+${CONFIG.rsvpPhone}?&body=${encodeURIComponent(text)}`;
-  status.textContent = "Opening your messages app. Press send to finish your reply.";
-  thank();
-  if (isGoing()) burst(innerWidth / 2, innerHeight / 2, 70);
+  if (!CONFIG.rsvpPhone) { const t = buildMessage(); if (t) copy(t); return; }
+  const t = composeMessage($("#name").value.trim());
+  sendVia(`sms:+${CONFIG.rsvpPhone}?&body=${encodeURIComponent(t)}`, "your messages app");
 });
+$("#msgrBtn").addEventListener("click", () => sendVia(`https://m.me/${encodeURIComponent(CONFIG.rsvpMessenger)}`, "Messenger"));
+$("#vbrBtn").addEventListener("click", () => sendVia(`viber://chat?number=%2B${CONFIG.rsvpViber}`, "Viber"));
 $("#copyBtn").addEventListener("click", () => { const t = buildMessage(); if (t) copy(t); });
 async function copy(text) {
   try { await navigator.clipboard.writeText(text); status.textContent = "Copied. Paste it into Messenger, Viber, or text to send."; buzz(15); }
