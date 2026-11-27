@@ -27,7 +27,7 @@ Eight framed spots, one per page, in order: Welcome, Save the date, When and whe
 - Put photos in `images/` named `avree-1.jpg` to `avree-8.jpg`. See `images/README.txt` (about 1200px wide, under 300 KB).
 - Missing file: a soft pink frame shows "Avree photo N / Photo coming soon". Nothing breaks.
 - File present: the photo shows with a gentle zoom-in fade. Tap it to enlarge. Close with the Close button, Esc, or a tap outside.
-- Images use `loading="lazy"`, `object-fit: cover`, and alt text "Avree photo N".
+- Images load right away (no `loading="lazy"`, see review fixes), `object-fit: cover`, and alt text "Avree photo N".
 - The old "tap to add a photo" picker and the `photo` setting in `CONFIG` were removed. The Welcome photo is now `images/avree-1.jpg`.
 - To change the folder or extension, edit `PHOTO_DIR` and `PHOTO_EXT` in the "Photo spots" script section.
 
@@ -43,3 +43,21 @@ Eight framed spots, one per page, in order: Welcome, Save the date, When and whe
 - Music toggle not added: the page has no audio file.
 - Testing: HTML tags balance and the script passes `node --check`. Headless Chrome could not start here (sandbox error), so there was no browser run and no console check. Please open the page once on your phone.
 - Reply and wishes need no backend. Wishes stay on the guest's own device.
+
+## Review fixes (branch `review-fixes`)
+
+From `avree-invitation-backups/REVIEW.md`. Every placeholder is listed in `FILL-IN.md`.
+
+- **Bug 1:** the Welcome photo was invisible. Page 1 is now revealed when the curtain opens.
+- **Bug 2:** hidden photos never loaded. `loading="lazy"` removed.
+- **Link previews:** Open Graph and Twitter card tags, plus `images/og-image.png` (1200x630 placeholder card). Set the page address in the tags (see `FILL-IN.md`).
+- **No JavaScript:** a `<noscript>` block shows the date, places and a contact line. The curtain, book and nav are hidden without JS.
+- **Faster page turns:** about 300 ms each way (was 600 ms). The first-open curtain is the same. Reduced motion still turns it off.
+- **RSVP:** new "Reply on Messenger" and "Reply on Viber" buttons. They show only if `rsvpMessenger` or `rsvpViber` is set in CONFIG. The thank-you card shows only after a real copy or after the app really opened. A silent `sms:` failure with no copy shows a hint and no thank-you.
+- **Back button:** each page turn adds a history entry (`#p1` to `#p8`), so Back goes to the previous page.
+- **Accessibility:** the book and nav are `inert` and `aria-hidden` until the curtain opens.
+- **Countdown:** the day after the event it says "Thank you for celebrating with Avree."
+- **Balloons:** at 320 to 480px wide they sit in two rows and no longer overlap.
+- No real or fake GCash number, phone or address was added.
+
+Not changed: the `.ics` download in in-app browsers, `dialog.showModal()` on iOS before 15.4, landscape phones, and the Google Fonts link.
