@@ -52,7 +52,6 @@ From `avree-invitation-backups/REVIEW.md`. Every placeholder is listed in `FILL-
 - **Bug 2:** hidden photos never loaded. `loading="lazy"` removed.
 - **Link previews:** Open Graph and Twitter card tags, plus `images/og-image.png` (1200x630 placeholder card). Set the page address in the tags (see `FILL-IN.md`).
 - **No JavaScript:** a `<noscript>` block shows the date, places and a contact line. The curtain, book and nav are hidden without JS.
-- **Skip to the details:** a button on the Welcome page jumps to "When and where".
 - **Faster page turns:** about 300 ms each way (was 600 ms). The first-open curtain is the same. Reduced motion still turns it off.
 - **RSVP:** new "Reply on Messenger" and "Reply on Viber" buttons. They show only if `rsvpMessenger` or `rsvpViber` is set in CONFIG. The thank-you card shows only after a real copy or after the app really opened. A silent `sms:` failure with no copy shows a hint and no thank-you.
 - **Back button:** each page turn adds a history entry (`#p1` to `#p8`), so Back goes to the previous page.

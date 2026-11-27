@@ -313,7 +313,6 @@
   .ns { max-width: 30rem; margin: 0 auto; padding: 2rem 1.25rem; color: var(--white); text-align: center; }
   .ns h1 { font-family: var(--display); font-weight: 400; font-size: 3.5rem; line-height: 1; margin: .4rem 0 1rem; }
   .ns p { margin-bottom: .6rem; }
-  .skip { margin-top: 1.25rem; }
   .js .rv { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; transition-delay: var(--rd, 0s); }
   .js .rv.seen { opacity: 1; transform: none; }
   .count-row strong.tock { animation: tock .35s ease-out; }
@@ -387,7 +386,6 @@
         <p class="play-hint" id="hint" aria-live="polite">Tap the balloons.</p>
         <div class="sky" id="sky"></div>
       </div>
-      <button class="link-btn skip" id="skipBtn" type="button">Skip to the details</button>
     </div>
   </section>
 
@@ -770,7 +768,6 @@ function go(i, fromHistory) {
     setTimeout(() => { busy = false; }, TURN);
   }, TURN);
 }
-$("#skipBtn").addEventListener("click", () => go(2));
 /* Back button: each page turn is a history entry */
 addEventListener("popstate", (e) => {
   const i = e.state && e.state.p;
